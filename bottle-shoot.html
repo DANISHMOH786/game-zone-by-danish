@@ -5,1876 +5,255 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#05050d">
 <title>Bottle Shoot - Game Zone By Danish</title>
-
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
-  width:100%;
-  min-height:100%;
-  background:#05050d;
-  color:#fff;
-  font-family:Arial,sans-serif;
-}
-
-body{
-  overflow-x:hidden;
-}
-
-.app{
-  width:min(100%,900px);
-  margin:auto;
-  padding:14px;
-}
-
-.header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:10px;
-}
-
-.logo{
-  font-size:24px;
-  font-weight:1000;
-  background:linear-gradient(90deg,#00eaff,#9c2cff,#ff24bd);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-.by{
-  font-size:9px;
-  color:#777;
-  letter-spacing:3px;
-}
-
-.coins{
-  padding:8px 13px;
-  border:1px solid #ffd21c66;
-  background:#171323;
-  border-radius:20px;
-  font-weight:900;
-}
-
-.coins span{
-  color:#ffd21c;
-}
-
-.back,.btn{
-  border:0;
-  color:#fff;
-  font-weight:900;
-  border-radius:13px;
-  padding:10px 14px;
-  cursor:pointer;
-}
-
-.back{
-  background:#141426;
-  border:1px solid #292941;
-  margin-bottom:10px;
-}
-
-.card{
-  background:#0d0d19ee;
-  border:1px solid #00d9ff30;
-  border-radius:24px;
-  padding:14px;
-  box-shadow:0 20px 70px #0009;
-}
-
-.title{
-  text-align:center;
-  font-size:25px;
-  font-weight:1000;
-}
-
-.subtitle{
-  text-align:center;
-  color:#77778c;
-  font-size:11px;
-  margin:4px 0 12px;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:7px;
-  margin-bottom:12px;
-}
-
-.stat{
-  background:#090914;
-  border:1px solid #202038;
-  border-radius:14px;
-  padding:8px;
-  text-align:center;
-}
-
-.stat strong{
-  display:block;
-  font-size:18px;
-}
-
-.stat small{
-  font-size:8px;
-  color:#66667b;
-}
-
-.gameWrap{
-  position:relative;
-  width:min(94vw,760px);
-  margin:auto;
-}
-
-canvas{
-  display:block;
-  width:100%;
-  aspect-ratio:1/1;
-  border-radius:22px;
-  border:2px solid #00eaff55;
-  background:#050812;
-  box-shadow:0 0 35px #00eaff15;
-  touch-action:none;
-}
-
-.overlay{
-  position:absolute;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  border-radius:22px;
-  background:#000b;
-  backdrop-filter:blur(5px);
-}
-
-.overlay.show{
-  display:flex;
-}
-
-.overlayBox{
-  text-align:center;
-  padding:25px;
-}
-
-.overlayIcon{
-  font-size:50px;
-}
-
-.overlayTitle{
-  font-size:28px;
-  font-weight:1000;
-  margin:5px 0;
-}
-
-.reward{
-  color:#ffd21c;
-  font-weight:900;
-  margin:8px;
-}
-
-.controls{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:10px;
-}
-
-.btn{
-  background:linear-gradient(90deg,#008cff,#962cff);
-  font-size:14px;
-}
-
-.btn.secondary{
-  background:#151527;
-  border:1px solid #292941;
-}
-
-.hint{
-  text-align:center;
-  color:#77778c;
-  font-size:11px;
-  margin-top:9px;
-}
-
-@media(max-width:520px){
-  .app{
-    padding:9px;
-  }
-
-  .card{
-    padding:10px;
-    border-radius:20px;
-  }
-
-  .title{
-    font-size:21px;
-  }
-
-  .stats{
-    gap:5px;
-  }
-
-  .stat{
-    padding:7px 3px;
-  }
-
-  .stat strong{
-    font-size:16px;
-  }
-
-  .controls .btn{
-    padding:10px 4px;
-    font-size:12px;
-  }
-}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;min-height:100%;background:#05050d;color:#fff;font-family:Arial,sans-serif}
+body{overflow-x:hidden}.app{width:min(100%,900px);margin:auto;padding:14px}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.logo{font-size:24px;font-weight:1000;background:linear-gradient(90deg,#00eaff,#9c2cff,#ff24bd);-webkit-background-clip:text;color:transparent}
+.by{font-size:9px;color:#777;letter-spacing:3px}.coins{padding:8px 13px;border:1px solid #ffd21c66;background:#171323;border-radius:20px;font-weight:900}
+.coins span{color:#ffd21c}.back,.btn{border:0;color:#fff;font-weight:900;border-radius:13px;padding:10px 14px;cursor:pointer}
+.back{background:#141426;border:1px solid #292941;margin-bottom:10px}.card{background:#0d0d19ee;border:1px solid #00d9ff30;border-radius:24px;padding:14px;box-shadow:0 20px 70px #0009}
+.title{text-align:center;font-size:25px;font-weight:1000}.subtitle{text-align:center;color:#77778c;font-size:11px;margin:4px 0 12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:12px}.stat{background:#090914;border:1px solid #202038;border-radius:14px;padding:8px;text-align:center}
+.stat strong{display:block;font-size:18px}.stat small{font-size:8px;color:#66667b}
+.gameWrap{position:relative;width:min(94vw,760px);margin:auto}canvas{display:block;width:100%;aspect-ratio:1/1;border-radius:22px;border:2px solid #00eaff55;background:#050812;box-shadow:0 0 35px #00eaff15;touch-action:none}
+.overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;border-radius:22px;background:#000b;backdrop-filter:blur(5px)}.overlay.show{display:flex}
+.overlayBox{text-align:center;padding:25px}.overlayIcon{font-size:50px}.overlayTitle{font-size:28px;font-weight:1000;margin:5px 0}.reward{color:#ffd21c;font-weight:900;margin:8px}
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.btn{background:linear-gradient(90deg,#008cff,#962cff);font-size:14px}.btn.secondary{background:#151527;border:1px solid #292941}
+.hint{text-align:center;color:#77778c;font-size:11px;margin-top:9px}
+@media(max-width:520px){.app{padding:9px}.card{padding:10px;border-radius:20px}.title{font-size:21px}.stats{gap:5px}.stat{padding:7px 3px}.stat strong{font-size:16px}.controls .btn{padding:10px 4px;font-size:12px}}
 </style>
 </head>
-
 <body>
-
 <div class="app">
-
-  <div class="header">
-
-    <div>
-      <div class="logo">GAME ZONE</div>
-      <div class="by">BY DANISH</div>
-    </div>
-
-    <div class="coins">
-      🪙 <span id="coins">100</span>
-    </div>
-
-  </div>
-
-  <button class="back" onclick="goBack()">← Games</button>
-
-  <div class="card">
-
-    <div class="title">🎯 BOTTLE SHOOT</div>
-
-    <div class="subtitle">
-      Aim • Shoot • Survive • Level Up
-    </div>
-
-    <div class="stats">
-
-      <div class="stat">
-        <strong id="score">0</strong>
-        <small>SCORE</small>
-      </div>
-
-      <div class="stat">
-        <strong id="level">1/20</strong>
-        <small>LEVEL</small>
-      </div>
-
-      <div class="stat">
-        <strong id="ammo">5</strong>
-        <small>AMMO</small>
-      </div>
-
-      <div class="stat">
-        <strong id="time">35</strong>
-        <small>TIME</small>
-      </div>
-
-    </div>
-
-    <div class="gameWrap">
-
-      <canvas id="game"></canvas>
-
-      <div class="overlay" id="overlay">
-
-        <div class="overlayBox">
-
-          <div class="overlayIcon" id="overlayIcon">
-            💥
-          </div>
-
-          <div class="overlayTitle" id="overlayTitle">
-            GAME OVER
-          </div>
-
-          <div id="overlayText"></div>
-
-          <div class="reward" id="reward"></div>
-
-          <button class="btn" onclick="restart()">
-            🔄 PLAY AGAIN
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="controls">
-
-      <button class="btn" onclick="restart()">
-        🔄 RESTART
-      </button>
-
-      <button class="btn secondary" onclick="togglePause()">
-        ⏸️ PAUSE
-      </button>
-
-      <button class="btn secondary" onclick="toggleSound()">
-        <span id="soundText">🔊 SOUND</span>
-      </button>
-
-    </div>
-
-    <div class="hint">
-      Tap anywhere → gun points exactly there and fires.
-      Shoot every GREEN bottle. Do NOT shoot RED ☠ bottle.
-    </div>
-
-  </div>
-
-</div>
+<div class="header"><div><div class="logo">GAME ZONE</div><div class="by">BY DANISH</div></div><div class="coins">🪙 <span id="coins">100</span></div></div>
+<button class="back" onclick="goBack()">← Games</button>
+<div class="card">
+<div class="title">🎯 BOTTLE SHOOT</div><div class="subtitle">Aim • Shoot • Survive • Level Up</div>
+<div class="stats"><div class="stat"><strong id="score">0</strong><small>SCORE</small></div><div class="stat"><strong id="level">1/20</strong><small>LEVEL</small></div><div class="stat"><strong id="ammo">5</strong><small>AMMO</small></div><div class="stat"><strong id="time">35</strong><small>TIME</small></div></div>
+<div class="gameWrap"><canvas id="game"></canvas><div class="overlay" id="overlay"><div class="overlayBox"><div class="overlayIcon" id="overlayIcon">💥</div><div class="overlayTitle" id="overlayTitle">GAME OVER</div><div id="overlayText"></div><div class="reward" id="reward"></div><button class="btn" onclick="restart()">🔄 PLAY AGAIN</button></div></div></div>
+<div class="controls"><button class="btn" onclick="restart()">🔄 RESTART</button><button class="btn secondary" onclick="togglePause()">⏸️ PAUSE</button><button class="btn secondary" onclick="toggleSound()"><span id="soundText">🔊 SOUND</span></button></div>
+<div class="hint">Tap anywhere → gun smoothly points and fires. Shoot GREEN bottles. Avoid RED ☠ bottles!</div>
+</div></div>
 
 <script>
-
-const canvas=document.getElementById("game");
-const ctx=canvas.getContext("2d");
-
-const W=1000;
-const H=1000;
-
-canvas.width=W;
-canvas.height=H;
-
+const canvas=document.getElementById("game"),ctx=canvas.getContext("2d");
+const W=1000,H=1000;canvas.width=W;canvas.height=H;
 const TOTAL=20;
-
-/*
-LEVEL:
-1  = 1 normal
-2  = 2 normal
-3  = 5 normal
-4  = 3 normal + 1 danger
-...
-20 = hardest
-*/
-
 const D={
-1:[1,0,5,35,.055],
-2:[2,0,7,38,.060],
-3:[5,0,12,42,.065],
-4:[3,1,10,42,.070],
-5:[4,1,12,42,.073],
-6:[5,1,13,44,.076],
-7:[5,2,14,45,.079],
-8:[6,1,15,45,.082],
-9:[6,2,16,46,.085],
-10:[7,2,17,46,.088],
-11:[7,2,18,47,.091],
-12:[8,2,19,47,.094],
-13:[8,3,20,48,.097],
-14:[9,3,21,48,.100],
-15:[9,3,22,49,.103],
-16:[10,3,23,49,.106],
-17:[10,4,24,50,.109],
-18:[11,4,25,50,.112],
-19:[12,4,27,52,.115],
-20:[14,5,30,55,.118]
+1:[1,0,5,35,.055],2:[2,0,7,38,.060],3:[5,0,12,42,.065],4:[3,1,10,42,.070],
+5:[4,1,12,42,.073],6:[5,1,13,44,.076],7:[5,2,14,45,.079],8:[6,1,15,45,.082],
+9:[6,2,16,46,.085],10:[7,2,17,46,.088],11:[7,2,18,47,.091],12:[8,2,19,47,.094],
+13:[8,3,20,48,.097],14:[9,3,21,48,.100],15:[9,3,22,49,.103],16:[10,3,23,49,.106],
+17:[10,4,24,50,.109],18:[11,4,25,50,.112],19:[12,4,27,52,.115],20:[14,5,30,55,.118]
 };
+const P={x:125,y:145,w:750,h:710,r:105};
+const straightA=P.w-2*P.r,straightB=P.h-2*P.r,arc=Math.PI*P.r/2;
+const LEN=2*straightA+2*straightB+4*arc;
 
+let score=0,level=1,ammo=5,timeLeft=35,running=true,paused=false,soundOn=true;
+let bottles=[],bullets=[],particles=[],aimAngle=-Math.PI/2,targetAngle=-Math.PI/2,last=0,msg="",audio=null;
+let flashTime=0;
+let coins=Number(localStorage.getItem("gzd_coins")||100);document.getElementById("coins").textContent=coins;
 
-/* =========================
-   PATH
-========================= */
-
-const P={
-  x:125,
-  y:145,
-  w:750,
-  h:710,
-  r:105
-};
-
-const straightA=P.w-2*P.r;
-const straightB=P.h-2*P.r;
-const arc=Math.PI*P.r/2;
-
-const LEN=
-  2*straightA+
-  2*straightB+
-  4*arc;
-
-
-/* =========================
-   GAME VARIABLES
-========================= */
-
-let score=0;
-let level=1;
-let ammo=5;
-let timeLeft=35;
-
-let running=true;
-let paused=false;
-let soundOn=true;
-
-let bottles=[];
-let bullets=[];
-
-let aimAngle=-Math.PI/2;
-
-let last=0;
-let msg="";
-
-let audio=null;
-
-let coins=
-  Number(localStorage.getItem("gzd_coins")||100);
-
-document.getElementById("coins").textContent=coins;
-
-
-/* =========================
-   PATH POSITION
-========================= */
+if (!ctx.roundRect) {
+  ctx.roundRect = function(x, y, w, h, r) {
+    if (typeof r === 'number') r = [r, r, r, r];
+    this.beginPath();this.moveTo(x + r[0], y);
+    this.lineTo(x + w - r[1], y);this.quadraticCurveTo(x + w, y, x + w, y + r[1]);
+    this.lineTo(x + w, y + h - r[2]);this.quadraticCurveTo(x + w, y + h, x + w - r[2], y + h);
+    this.lineTo(x + r[3], y + h);this.quadraticCurveTo(x, y + h, x, y + h - r[3]);
+    this.lineTo(x, y + r[0]);this.quadraticCurveTo(x, y, x + r[0], y);this.closePath();
+  };
+}
 
 function point(t){
-
-  t=((t%LEN)+LEN)%LEN;
-
-  const x=P.x;
-  const y=P.y;
-  const w=P.w;
-  const h=P.h;
-  const r=P.r;
-
-
-  if(t<straightA){
-
-    return{
-      x:x+r+t,
-      y:y,
-      ang:0
-    };
-
-  }
-
-  t-=straightA;
-
-
-  if(t<arc){
-
-    let a=-Math.PI/2+t/r;
-
-    return{
-      x:x+w-r+r*Math.cos(a),
-      y:y+r+r*Math.sin(a),
-      ang:a+Math.PI/2
-    };
-
-  }
-
-  t-=arc;
-
-
-  if(t<straightB){
-
-    return{
-      x:x+w,
-      y:y+r+t,
-      ang:Math.PI/2
-    };
-
-  }
-
-  t-=straightB;
-
-
-  if(t<arc){
-
-    let a=t/r;
-
-    return{
-      x:x+w-r+r*Math.cos(a),
-      y:y+h-r+r*Math.sin(a),
-      ang:a+Math.PI/2
-    };
-
-  }
-
-  t-=arc;
-
-
-  if(t<straightA){
-
-    return{
-      x:x+w-r-t,
-      y:y+h,
-      ang:Math.PI
-    };
-
-  }
-
-  t-=straightA;
-
-
-  if(t<arc){
-
-    let a=Math.PI/2+t/r;
-
-    return{
-      x:x+r+r*Math.cos(a),
-      y:y+h-r+r*Math.sin(a),
-      ang:a+Math.PI/2
-    };
-
-  }
-
-  t-=arc;
-
-
-  if(t<straightB){
-
-    return{
-      x:x,
-      y:y+h-r-t,
-      ang:-Math.PI/2
-    };
-
-  }
-
-  let a=Math.PI+t/r;
-
-  return{
-    x:x+r+r*Math.cos(a),
-    y:y+r+r*Math.sin(a),
-    ang:a+Math.PI/2
-  };
-
+ t=((t%LEN)+LEN)%LEN;const x=P.x,y=P.y,w=P.w,h=P.h,r=P.r;
+ if(t<straightA)return{x:x+r+t,y,ang:0};t-=straightA;
+ if(t<arc){let a=-Math.PI/2+t/r;return{x:x+w-r+r*Math.cos(a),y:y+r+r*Math.sin(a),ang:a+Math.PI/2}}t-=arc;
+ if(t<straightB)return{x:x+w,y:y+r+t,ang:Math.PI/2};t-=straightB;
+ if(t<arc){let a=t/r;return{x:x+w-r+r*Math.cos(a),y:y+h-r+r*Math.sin(a),ang:a+Math.PI/2}}t-=arc;
+ if(t<straightA)return{x:x+w-r-t,y:y+h,ang:Math.PI};t-=straightA;
+ if(t<arc){let a=Math.PI/2+t/r;return{x:x+r+r*Math.cos(a),y:y+h-r+r*Math.sin(a),ang:a+Math.PI/2}}t-=arc;
+ if(t<straightB)return{x,y:y+h-r-t,ang:-Math.PI/2};t-=straightB;
+ let a=Math.PI+t/r;return{x:x+r+r*Math.cos(a),y:y+r+r*Math.sin(a),ang:a+Math.PI/2};
 }
-
-
-/* =========================
-   RESIZE
-========================= */
-
-function resize(){
-
-  const r=canvas.getBoundingClientRect();
-
-  const d=Math.min(
-    devicePixelRatio||1,
-    2
-  );
-
-  const s=r.width;
-
-  canvas.width=W*d;
-  canvas.height=H*d;
-
-  ctx.setTransform(
-    s/W*d,
-    0,
-    0,
-    s/H*d,
-    0,
-    0
-  );
-
-}
-
-addEventListener("resize",resize);
-
-resize();
-
-
-/* =========================
-   SPAWN LEVEL
-========================= */
 
 function spawn(){
-
-  const d=D[level];
-
-  bottles=[];
-  bullets=[];
-
-  ammo=d[2];
-
-  timeLeft=d[3];
-
-
-  const normal=d[0];
-  const danger=d[1];
-
-  const total=normal+danger;
-
-
-  for(let i=0;i<total;i++){
-
-    bottles.push({
-
-      t:i/total+
-        Math.random()*.02,
-
-      s:d[4]*
-        (.88+Math.random()*.2),
-
-      danger:i>=normal,
-
-      alive:true
-
-    });
-
-  }
-
-  hud();
-
+ const d=D[level];bottles=[];bullets=[];particles=[];ammo=d[2];timeLeft=d[3];
+ const n=d[0]+d[1];
+ for(let i=0;i<n;i++)bottles.push({t:i/n+Math.random()*.02,s:d[4]*(.88+Math.random()*.2),danger:i>=d[0],alive:true});
+ hud();
 }
-
-
-/* =========================
-   HUD
-========================= */
-
-function hud(){
-
-  document.getElementById("score")
-    .textContent=score;
-
-  document.getElementById("level")
-    .textContent=level+"/"+TOTAL;
-
-  document.getElementById("ammo")
-    .textContent=ammo;
-
-  document.getElementById("time")
-    .textContent=
-      Math.max(
-        0,
-        Math.ceil(timeLeft)
-      );
-
-}
-
-
-/* =========================
-   DRAW BOTTLE
-========================= */
+function hud(){document.getElementById("score").textContent=score;document.getElementById("level").textContent=level+"/"+TOTAL;document.getElementById("ammo").textContent=ammo;document.getElementById("time").textContent=Math.max(0,Math.ceil(timeLeft))}
 
 function bottle(b){
-
-  const p=point(b.t*LEN);
-
-  ctx.save();
-
-  ctx.translate(
-    p.x,
-    p.y
-  );
-
-  ctx.rotate(p.ang);
-
-
-  ctx.shadowBlur=
-    b.danger?22:18;
-
-  ctx.shadowColor=
-    b.danger?
-    "#ff243d":
-    "#00ff8a";
-
-
-  let g=
-    ctx.createLinearGradient(
-      -23,0,
-      23,0
-    );
-
-
-  g.addColorStop(
-    0,
-    b.danger?
-    "#71101c":
-    "#087c43"
-  );
-
-  g.addColorStop(
-    .5,
-    b.danger?
-    "#ff3348":
-    "#32ef8a"
-  );
-
-  g.addColorStop(
-    1,
-    b.danger?
-    "#71101c":
-    "#087c43"
-  );
-
-
-  ctx.fillStyle=g;
-
-  ctx.beginPath();
-
-  ctx.roundRect(
-    -22,
-    -25,
-    44,
-    60,
-    10
-  );
-
-  ctx.fill();
-
-
-  /* bottle neck */
-
-  ctx.fillStyle=
-    b.danger?
-    "#c92338":
-    "#24c96c";
-
-  ctx.fillRect(
-    -12,
-    -43,
-    24,
-    20
-  );
-
-
-  /* cap */
-
-  ctx.fillStyle="#ddd";
-
-  ctx.fillRect(
-    -13,
-    -48,
-    26,
-    7
-  );
-
-
-  /* label */
-
-  ctx.shadowBlur=0;
-
-  ctx.fillStyle=
-    b.danger?
-    "#c92338":
-    "#07131a";
-
-  ctx.fillRect(
-    -20,
-    -3,
-    40,
-    21
-  );
-
-
-  ctx.fillStyle=
-    b.danger?
-    "#fff":
-    "#7dffb4";
-
-  ctx.font="900 10px Arial";
-
-  ctx.textAlign="center";
-
-  ctx.textBaseline="middle";
-
-  ctx.fillText(
-    b.danger?
-    "☠":
-    "ZONE",
-    0,
-    8
-  );
-
-
-  /* shine */
-
-  ctx.fillStyle="#fff8";
-
-  ctx.fillRect(
-    -14,
-    -18,
-    5,
-    18
-  );
-
-
-  ctx.restore();
-
+ const p=point(b.t*LEN);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);
+ ctx.shadowBlur=b.danger?20:15;ctx.shadowColor=b.danger?"#ff243d":"#00ff8a";
+ 
+ let g=ctx.createLinearGradient(-20,0,20,0);
+ g.addColorStop(0,b.danger?"#60000a":"#004d25");
+ g.addColorStop(0.3,b.danger?"#ff2b48":"#00ff7f");
+ g.addColorStop(0.8,b.danger?"#800010":"#00803d");
+ ctx.fillStyle=g;
+ 
+ ctx.beginPath();
+ ctx.moveTo(-18,30);ctx.lineTo(18,30);ctx.lineTo(16,-15);ctx.lineTo(8,-25);
+ ctx.lineTo(8,-45);ctx.lineTo(-8,-45);ctx.lineTo(-8,-25);ctx.lineTo(-16,-15);
+ ctx.closePath();ctx.fill();
+ 
+ ctx.fillStyle=b.danger?"#ff8090":"#a3ffce";ctx.fillRect(-6,-48,12,5);
+ ctx.fillStyle="#ffffff44";ctx.fillRect(-12,-10,5,30);
+ ctx.shadowBlur=0;ctx.fillStyle=b.danger?"#fff":"#000";ctx.font="900 12px Arial";ctx.textAlign="center";ctx.fillText(b.danger?"☠":"★",0,10);
+ ctx.restore();
 }
 
-
-/* =========================
-   DRAW GUN
-========================= */
+function createShards(x, y, isDanger) {
+  const color = isDanger ? ["#ff243d", "#900010", "#ff8090"] : ["#00ff8a", "#006633", "#a3ffce"];
+  for (let i = 0; i < 18; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 150 + Math.random() * 300;
+    particles.push({
+      x, y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      size: 4 + Math.random() * 8,
+      color: color[Math.floor(Math.random() * color.length)],
+      life: 0.5 + Math.random() * 0.4
+    });
+  }
+}
 
 function gun(){
-
-  const gx=500;
-  const gy=500;
-
-
-  ctx.save();
-
-  ctx.translate(
-    gx,
-    gy
-  );
-
-  ctx.rotate(
-    aimAngle
-  );
-
-
-  /* gun glow */
-
-  ctx.shadowBlur=18;
-
-  ctx.shadowColor="#00eaff";
-
-
-  /* centre */
-
-  ctx.fillStyle="#08141c";
-
-  ctx.beginPath();
-
-  ctx.arc(
-    0,
-    0,
-    58,
-    0,
-    Math.PI*2
-  );
-
-  ctx.fill();
-
-
-  ctx.strokeStyle="#00dfff";
-
-  ctx.lineWidth=4;
-
-  ctx.stroke();
-
-
-  ctx.shadowBlur=0;
-
-
-  /* barrel */
-
-  let m=
-    ctx.createLinearGradient(
-      0,-12,
-      0,12
-    );
-
-  m.addColorStop(
-    0,
-    "#e5f4fa"
-  );
-
-  m.addColorStop(
-    .5,
-    "#71838e"
-  );
-
-  m.addColorStop(
-    1,
-    "#202b32"
-  );
-
-
-  ctx.fillStyle=m;
-
-  ctx.beginPath();
-
-  ctx.roundRect(
-    10,
-    -13,
-    125,
-    26,
-    9
-  );
-
-  ctx.fill();
-
-
-  /* muzzle */
-
-  ctx.fillStyle="#10181e";
-
-  ctx.fillRect(
-    125,
-    -18,
-    18,
-    36
-  );
-
-
-  ctx.fillStyle="#ffb23d";
-
-  ctx.fillRect(
-    137,
-    -12,
-    6,
-    24
-  );
-
-
-  /* body */
-
-  ctx.fillStyle="#303a42";
-
-  ctx.beginPath();
-
-  ctx.roundRect(
-    -20,
-    -24,
-    58,
-    48,
-    12
-  );
-
-  ctx.fill();
-
-
-  /* handle */
-
-  ctx.fillStyle="#8b4e25";
-
-  ctx.beginPath();
-
-  ctx.roundRect(
-    -12,
-    15,
-    25,
-    55,
-    8
-  );
-
-  ctx.fill();
-
-
-  ctx.restore();
-
-
-  /* aim line */
-
-  ctx.save();
-
-  ctx.setLineDash([
-    8,
-    10
-  ]);
-
-  ctx.strokeStyle="#fff7";
-
-  ctx.lineWidth=2;
-
-  ctx.beginPath();
-
-  ctx.moveTo(
-    500,
-    500
-  );
-
-  ctx.lineTo(
-    500+
-    Math.cos(aimAngle)*350,
-
-    500+
-    Math.sin(aimAngle)*350
-  );
-
-  ctx.stroke();
-
-  ctx.restore();
-
+ const gx=500,gy=500;ctx.save();ctx.translate(gx,gy);ctx.rotate(aimAngle);
+ 
+ ctx.shadowBlur=20;ctx.shadowColor="#00eaff";ctx.fillStyle="#0a121c";
+ ctx.beginPath();ctx.arc(0,0,45,0,Math.PI*2);ctx.fill();
+ ctx.strokeStyle="#00eaff";ctx.lineWidth=4;ctx.stroke();ctx.shadowBlur=0;
+ 
+ let g=ctx.createLinearGradient(0,-10,0,10);
+ g.addColorStop(0,"#d0e8f2");g.addColorStop(0.5,"#4a5c66");g.addColorStop(1,"#182228");
+ ctx.fillStyle=g;ctx.roundRect(10,-12,110,24,6);ctx.fill();
+ 
+ ctx.fillStyle="#10181e";ctx.fillRect(115,-15,15,30);
+ ctx.fillStyle="#ffb23d";ctx.fillRect(125,-8,8,16);
+ 
+ ctx.fillStyle="#8b4e25";ctx.roundRect(-25,10,22,45,6);ctx.fill();
+ 
+ if(flashTime > 0) {
+   ctx.fillStyle="#ffea00";ctx.beginPath();ctx.arc(140,0,25+Math.random()*10,0,Math.PI*2);ctx.fill();
+   ctx.fillStyle="#ff3300";ctx.beginPath();ctx.arc(145,0,15,0,Math.PI*2);ctx.fill();
+   ctx.fillStyle="#ffffffaa";ctx.beginPath();ctx.arc(155,0,30,0,Math.PI*2);ctx.fill();
+ }
+ ctx.restore();
 }
-
-
-/* =========================
-   BULLET
-========================= */
 
 function drawBullet(b){
-
-  ctx.save();
-
-  ctx.translate(
-    b.x,
-    b.y
-  );
-
-  ctx.rotate(
-    Math.atan2(
-      b.vy,
-      b.vx
-    )
-  );
-
-  ctx.shadowBlur=18;
-
-  ctx.shadowColor="#ffd21c";
-
-  ctx.fillStyle="#ffd21c";
-
-  ctx.beginPath();
-
-  ctx.ellipse(
-    0,
-    0,
-    15,
-    5,
-    0,
-    0,
-    Math.PI*2
-  );
-
-  ctx.fill();
-
-  ctx.restore();
-
+  ctx.save();ctx.translate(b.x,b.y);ctx.rotate(Math.atan2(b.vy,b.vx));
+  ctx.shadowBlur=15;ctx.shadowColor="#ffd21c";ctx.fillStyle="#ffd21c";
+  ctx.beginPath();ctx.ellipse(0,0,14,4,0,0,Math.PI*2);ctx.fill();ctx.restore();
 }
-
-
-/* =========================
-   DRAW GAME
-========================= */
 
 function draw(){
-
-  ctx.clearRect(
-    0,
-    0,
-    W,
-    H
-  );
-
-
-  ctx.fillStyle="#050812";
-
-  ctx.fillRect(
-    0,
-    0,
-    W,
-    H
-  );
-
-
-  /* grid */
-
-  ctx.strokeStyle="#00d9ff10";
-
-  ctx.lineWidth=2;
-
-
-  for(
-    let x=30;
-    x<W;
-    x+=55
-  ){
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-      x,
-      0
-    );
-
-    ctx.lineTo(
-      x,
-      H
-    );
-
-    ctx.stroke();
-
-  }
-
-
-  for(
-    let y=30;
-    y<H;
-    y+=55
-  ){
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-      0,
-      y
-    );
-
-    ctx.lineTo(
-      W,
-      y
-    );
-
-    ctx.stroke();
-
-  }
-
-
-  /* path */
-
-  ctx.save();
-
-  ctx.shadowBlur=25;
-
-  ctx.shadowColor="#00eaff";
-
-  ctx.strokeStyle="#00eaff";
-
-  ctx.lineWidth=15;
-
-  ctx.beginPath();
-
-  ctx.roundRect(
-    P.x,
-    P.y,
-    P.w,
-    P.h,
-    P.r
-  );
-
-  ctx.stroke();
-
-
-  ctx.shadowBlur=0;
-
-  ctx.strokeStyle="#b9fbff";
-
-  ctx.lineWidth=4;
-
-  ctx.stroke();
-
-  ctx.restore();
-
-
-  bottles.forEach(
-    b=>{
-      if(b.alive)
-        bottle(b);
-    }
-  );
-
-
-  bullets.forEach(
-    drawBullet
-  );
-
-
-  gun();
-
-
-  if(msg){
-
-    ctx.fillStyle="#000c";
-
-    ctx.fillRect(
-      280,
-      455,
-      440,
-      90
-    );
-
-    ctx.strokeStyle="#00eaff";
-
-    ctx.lineWidth=3;
-
-    ctx.strokeRect(
-      280,
-      455,
-      440,
-      90
-    );
-
-    ctx.fillStyle="#fff";
-
-    ctx.font="900 28px Arial";
-
-    ctx.textAlign="center";
-
-    ctx.fillText(
-      msg,
-      500,
-      510
-    );
-
-  }
-
+ ctx.clearRect(0,0,W,H);ctx.fillStyle="#050812";ctx.fillRect(0,0,W,H);ctx.strokeStyle="#00d9ff10";ctx.lineWidth=2;
+ for(let x=30;x<W;x+=55){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=30;y<H;y+=55){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+ ctx.save();ctx.shadowBlur=25;ctx.shadowColor="#00eaff";ctx.strokeStyle="#00eaff";ctx.lineWidth=15;ctx.roundRect(P.x,P.y,P.w,P.h,P.r);ctx.stroke();ctx.shadowBlur=0;ctx.strokeStyle="#b9fbff";ctx.lineWidth=4;ctx.stroke();ctx.restore();
+ 
+ bottles.forEach(b=>b.alive&&bottle(b));
+ 
+ particles.forEach(p => {
+   ctx.fillStyle = p.color;
+   ctx.beginPath();ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);ctx.fill();
+ });
+ 
+ bullets.forEach(drawBullet);gun();
+ 
+ if(msg){ctx.fillStyle="#000c";ctx.fillRect(280,455,440,90);ctx.strokeStyle="#00eaff";ctx.lineWidth=3;ctx.strokeRect(280,455,440,90);ctx.fillStyle="#fff";ctx.font="900 28px Arial";ctx.fillText(msg,500,510)}
 }
-
-
-/* =========================
-   FIRE
-========================= */
 
 function fire(x,y){
-
-  if(
-    !running||
-    paused||
-    ammo<=0
-  )return;
-
-
-  const dx=x-500;
-  const dy=y-500;
-
-  const len=
-    Math.hypot(
-      dx,
-      dy
-    );
-
-
-  if(len<5)return;
-
-
-  /*
-    IMPORTANT:
-    Gun rotates towards
-    EXACT TAP LOCATION.
-  */
-
-  aimAngle=
-    Math.atan2(
-      dy,
-      dx
-    );
-
-
-  ammo--;
-
-  hud();
-
-  beep("shoot");
-
-
-  bullets.push({
-
-    x:500,
-
-    y:500,
-
-    vx:dx/len*1050,
-
-    vy:dy/len*1050,
-
-    life:1.4
-
-  });
-
+ if(!running||paused||ammo<=0)return;
+ let dx=x-500,dy=y-500,len=Math.hypot(dx,dy);if(len<5)return;
+ targetAngle=Math.atan2(dy,dx);
+ ammo--;hud();beep("shoot");flashTime=0.08;
+ bullets.push({x:500+Math.cos(targetAngle)*120,y:500+Math.sin(targetAngle)*120,vx:dx/len*1200,vy:dy/len*1200,life:1.2});
 }
 
-
-/* =========================
-   TAP / MOUSE
-========================= */
-
-canvas.addEventListener(
-  "pointerdown",
-  e=>{
-
-    const r=
-      canvas.getBoundingClientRect();
-
-
-    const x=
-      (e.clientX-r.left)/
-      r.width*
-      W;
-
-
-    const y=
-      (e.clientY-r.top)/
-      r.height*
-      H;
-
-
-    fire(x,y);
-
-  }
-);
-
-
-/* =========================
-   UPDATE
-========================= */
+canvas.addEventListener("pointerdown",e=>{
+  if(audio && audio.state === 'suspended') { audio.resume(); }
+  const r=canvas.getBoundingClientRect();
+  fire((e.clientX-r.left)/r.width*W,(e.clientY-r.top)/r.height*H);
+});
 
 function update(dt){
-
-  if(
-    !running||
-    paused
-  )return;
-
-
-  timeLeft-=dt;
-
-
-  if(timeLeft<=0){
-
-    timeLeft=0;
-
-    hud();
-
-    end("TIME UP");
-
-    return;
-
-  }
-
-
-  /* move bottles */
-
-  bottles.forEach(
-    b=>{
-
-      if(b.alive)
-        b.t+=b.s*dt;
-
-    }
-  );
-
-
-  /* move bullets */
-
-  bullets.forEach(
-    b=>{
-
-      b.x+=b.vx*dt;
-
-      b.y+=b.vy*dt;
-
-      b.life-=dt;
-
-    }
-  );
-
-
-  /* collision */
-
-  for(
-    const bl of bullets
-  ){
-
-    if(bl.life<=0)
-      continue;
-
-
-    for(
-      const b of bottles
-    ){
-
-      if(!b.alive)
-        continue;
-
-
-      const p=
-        point(
-          b.t*LEN
-        );
-
-
-      const distance=
-        Math.hypot(
-          bl.x-p.x,
-          bl.y-p.y
-        );
-
-
-      if(distance<40){
-
-        b.alive=false;
-
-        bl.life=0;
-
-
-        /*
-          DANGER BOTTLE:
-          shooting it = lose
-        */
-
-        if(b.danger){
-
-          end(
-            "DANGER BOTTLE HIT"
-          );
-
-          return;
-
-        }
-
-
-        /* normal bottle */
-
-        score+=10;
-
-        coins+=2;
-
-        localStorage.setItem(
-          "gzd_coins",
-          coins
-        );
-
-        document.getElementById(
-          "coins"
-        ).textContent=coins;
-
-        beep("hit");
-
-      }
-
-    }
-
-  }
-
-
-  bullets=
-    bullets.filter(
-      b=>
-        b.life>0&&
-        b.x>-60&&
-        b.x<W+60&&
-        b.y>-60&&
-        b.y<H+60
-    );
-
-
-  /*
-    Level complete when
-    ALL NORMAL bottles destroyed.
-    
-    Danger bottle does NOT need
-    to be destroyed.
-  */
-
-  if(
-    bottles.filter(
-      b=>
-        b.alive&&
-        !b.danger
-    ).length===0
-  ){
-
-    nextLevel();
-
-    return;
-
-  }
-
-
-  /*
-    No ammo and normal target
-    still alive = lose
-  */
-
-  if(
-    ammo===0&&
-    bottles.some(
-      b=>
-        b.alive&&
-        !b.danger
-    )&&
-    bullets.length===0
-  ){
-
-    end(
-      "OUT OF AMMO"
-    );
-
-    return;
-
-  }
-
-
-  hud();
-
+ if(!running||paused)return;timeLeft-=dt;if(timeLeft<=0){timeLeft=0;hud();end("TIME UP");return}
+ 
+ if(flashTime > 0) flashTime -= dt;
+ 
+ let diff = targetAngle - aimAngle;
+ diff = Math.atan2(Math.sin(diff), Math.cos(diff));
+ aimAngle += diff * Math.min(1, dt * 25);
+ 
+ bottles.forEach(b=>{if(b.alive)b.t+=b.s*dt});
+ bullets.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt});
+ 
+ particles.forEach(p => {
+   p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt;
+   p.size = Math.max(0, p.size - dt * 5);
+ });
+ particles = particles.filter(p => p.life > 0);
+
+ for(const bl of bullets){
+   if(bl.life<=0)continue;
+   for(const b of bottles){
+     if(!b.alive)continue;
+     const p=point(b.t*LEN);
+     if(Math.hypot(bl.x-p.x,bl.y-p.y)<40){
+       b.alive=false;bl.life=0;
+       createShards(p.x, p.y, b.danger);
+       if(b.danger){end("DANGER BOTTLE HIT");return}
+       else{score+=10;coins+=2;localStorage.setItem("gzd_coins",coins);document.getElementById("coins").textContent=coins;beep("hit")}
+     }
+   }
+ }
+ bullets=bullets.filter(b=>b.life>0&&b.x>-60&&b.x<W+60&&b.y>-60&&b.y<H+60);
+ if(bottles.filter(b=>b.alive&&!b.danger).length===0){nextLevel();return}
+ if(ammo===0&&bottles.some(b=>b.alive&&!b.danger)&&bullets.length===0){end("OUT OF AMMO");return}hud();
 }
-
-
-/* =========================
-   NEXT LEVEL
-========================= */
 
 function nextLevel(){
-
-  if(level===TOTAL){
-
-    score+=100;
-
-    coins+=100;
-
-    localStorage.setItem(
-      "gzd_coins",
-      coins
-    );
-
-    document.getElementById(
-      "coins"
-    ).textContent=coins;
-
-    win();
-
-    return;
-
-  }
-
-
-  score+=25;
-
-  coins+=10;
-
-  localStorage.setItem(
-    "gzd_coins",
-    coins
-  );
-
-  document.getElementById(
-    "coins"
-  ).textContent=coins;
-
-
-  level++;
-
-  msg=
-    "LEVEL "+level;
-
-
-  spawn();
-
-
-  setTimeout(
-    ()=>{
-      msg="";
-    },
-    700
-  );
-
-
-  beep("level");
-
+ if(level===TOTAL){score+=100;coins+=100;localStorage.setItem("gzd_coins",coins);document.getElementById("coins").textContent=coins;win();return}
+ score+=25;coins+=10;localStorage.setItem("gzd_coins",coins);document.getElementById("coins").textContent=coins;level++;msg="LEVEL "+level;spawn();setTimeout(()=>msg="",700);beep("level");
 }
 
-
-/* =========================
-   GAME OVER
-========================= */
-
-function end(reason){
-
-  if(!running)
-    return;
-
-
-  running=false;
-
-
-  document.getElementById(
-    "overlayIcon"
-  ).textContent="💥";
-
-
-  document.getElementById(
-    "overlayTitle"
-  ).textContent="GAME OVER";
-
-
-  document.getElementById(
-    "overlayText"
-  ).textContent=
-    reason+
-    " • Score: "+
-    score;
-
-
-  document.getElementById(
-    "reward"
-  ).textContent="";
-
-
-  document.getElementById(
-    "overlay"
-  ).classList.add(
-    "show"
-  );
-
-
-  beep("lose");
-
-}
-
-
-/* =========================
-   WIN
-========================= */
-
-function win(){
-
-  running=false;
-
-
-  document.getElementById(
-    "overlayIcon"
-  ).textContent="🏆";
-
-
-  document.getElementById(
-    "overlayTitle"
-  ).textContent="YOU WIN";
-
-
-  document.getElementById(
-    "overlayText"
-  ).textContent=
-    "All 20 levels complete!";
-
-
-  document.getElementById(
-    "reward"
-  ).textContent=
-    "+100 🪙";
-
-
-  document.getElementById(
-    "overlay"
-  ).classList.add(
-    "show"
-  );
-
-
-  beep("level");
-
-}
-
-
-/* =========================
-   RESTART
-========================= */
-
-function restart(){
-
-  score=0;
-
-  level=1;
-
-  running=true;
-
-  paused=false;
-
-  document.getElementById(
-    "overlay"
-  ).classList.remove(
-    "show"
-  );
-
-  spawn();
-
-}
-
-
-/* =========================
-   PAUSE
-========================= */
-
-function togglePause(){
-
-  if(!running)
-    return;
-
-
-  paused=!paused;
-
-
-  document.getElementById(
-    "overlay"
-  ).classList.toggle(
-    "show",
-    paused
-  );
-
-
-  if(paused){
-
-    document.getElementById(
-      "overlayIcon"
-    ).textContent="⏸️";
-
-
-    document.getElementById(
-      "overlayTitle"
-    ).textContent="PAUSED";
-
-
-    document.getElementById(
-      "overlayText"
-    ).textContent=
-      "Tap PAUSE again to continue";
-
-
-    document.getElementById(
-      "reward"
-    ).textContent="";
-
-  }
-
-}
-
-
-/* =========================
-   SOUND
-========================= */
-
-function toggleSound(){
-
-  soundOn=!soundOn;
-
-
-  document.getElementById(
-    "soundText"
-  ).textContent=
-    soundOn?
-    "🔊 SOUND":
-    "🔇 SOUND";
-
-}
-
-
-/* =========================
-   BEEP
-========================= */
-
-function beep(type){
-
-  if(!soundOn)
-    return;
-
-
+function end(r){if(!running)return;running=false;document.getElementById("overlayIcon").textContent="💥";document.getElementById("overlayTitle").textContent="GAME OVER";document.getElementById("overlayText").textContent=r+" • Score: "+score;document.getElementById("reward").textContent="";document.getElementById("overlay").classList.add("show");beep("lose")}
+function win(){running=false;document.getElementById("overlayIcon").textContent="🏆";document.getElementById("overlayTitle").textContent="YOU WIN";document.getElementById("overlayText").textContent="All 20 levels complete!";document.getElementById("reward").textContent="+100 🪙";document.getElementById("overlay").classList.add("show");beep("level")}
+function restart(){score=0;level=1;running=true;paused=false;document.getElementById("overlay").classList.remove("show");spawn()}
+function togglePause(){if(!running)return;paused=!paused;document.getElementById("overlay").classList.toggle("show",paused);if(paused){document.getElementById("overlayIcon").textContent="⏸️";document.getElementById("overlayTitle").textContent="PAUSED";document.getElementById("overlayText").textContent="Tap PAUSE again to continue";document.getElementById("reward").textContent=""}}
+function toggleSound(){soundOn=!soundOn;document.getElementById("soundText").textContent=soundOn?"🔊 SOUND":"🔇 SOUND"}
+
+function beep(t){
+  if(!soundOn)return;
   try{
-
-    audio=
-      audio||
-      new(
-        window.AudioContext||
-        window.webkitAudioContext
-      )();
-
-
-    let o=
-      audio.createOscillator();
-
-    let g=
-      audio.createGain();
-
-
-    o.connect(g);
-
-    g.connect(
-      audio.destination
-    );
-
-
-    o.frequency.value=
-      type==="shoot"
-      ?420
-      :type==="hit"
-      ?720
-      :type==="level"
-      ?980
-      :type==="lose"
-      ?130
-      :620;
-
-
-    g.gain.setValueAtTime(
-      .045,
-      audio.currentTime
-    );
-
-
-    g.gain.exponentialRampToValueAtTime(
-      .001,
-      audio.currentTime+.12
-    );
-
-
-    o.start();
-
-    o.stop(
-      audio.currentTime+.12
-    );
-
+    audio=audio||new(window.AudioContext||window.webkitAudioContext)();
+    if (audio.state === 'suspended') { audio.resume(); }
+    let o=audio.createOscillator(),g=audio.createGain();
+    o.connect(g);g.connect(audio.destination);
+    o.frequency.value=t==="shoot"?420:t==="hit"?720:t==="level"?980:t==="lose"?130:620;
+    g.gain.setValueAtTime(.045,audio.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.12);
+    o.start();o.stop(audio.currentTime+.12);
   }catch(e){}
-
 }
-
-
-/* =========================
-   BACK
-========================= */
 
 function goBack(){
-
-  location.href=
-    "index.html";
-
+  if(history.length > 1) { window.history.back(); } 
+  else { alert("No back page found!"); }
 }
 
-
-/* =========================
-   GAME LOOP
-========================= */
-
-function loop(now){
-
-  let dt=
-    Math.min(
-      (now-last)/1000,
-      .035
-    );
-
-
-  last=now;
-
-
-  update(dt);
-
-  draw();
-
-
-  requestAnimationFrame(
-    loop
-  );
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-spawn();
-
-requestAnimationFrame(
-  loop
-);
-
+function loop(now){let dt=Math.min((now-last)/1000,.035);last=now;update(dt);draw();requestAnimationFrame(loop)}
+spawn();requestAnimationFrame(loop);
 </script>
-
 </body>
 </html>
