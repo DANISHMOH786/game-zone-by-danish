@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#05050d">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#111111">
 <title>Bottle Shoot - Game Zone By Danish</title>
 
 <style>
@@ -14,339 +15,516 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-body{
-  min-height:100vh;
-  font-family:Arial,sans-serif;
-  color:#fff;
-  background:
-    radial-gradient(circle at 15% 10%,#30116b,transparent 35%),
-    radial-gradient(circle at 90% 80%,#002d68,transparent 35%),
-    #05050d;
+html,body{
+  width:100%;
+  height:100%;
   overflow:hidden;
+  background:#111;
+  font-family:Arial,sans-serif;
   touch-action:none;
 }
 
-.app{
-  width:100%;
-  max-width:520px;
-  margin:auto;
-  padding:15px;
-}
-
-.header{
+body{
   display:flex;
-  justify-content:space-between;
+  justify-content:center;
   align-items:center;
-  margin-bottom:11px;
 }
 
-.logo{
-  font-size:23px;
-  font-weight:1000;
-  background:linear-gradient(90deg,#00eaff,#9c2cff,#ff24bd);
-  -webkit-background-clip:text;
-  color:transparent;
+#game{
+  position:relative;
+  width:100vw;
+  max-width:520px;
+  height:100vh;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 55%,#292929 0,#1d1d1d 48%,#111 100%);
 }
 
-.by{
-  font-size:9px;
-  color:#777;
-  letter-spacing:3px;
-}
+/* TOP */
 
-.coins{
-  background:#171323;
-  border:1px solid #ffd21c55;
-  border-radius:18px;
-  padding:8px 12px;
-  font-weight:bold;
-}
-
-.coins span{
-  color:#ffd21c;
+.top{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:62px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 15px;
+  z-index:20;
 }
 
 .back{
-  background:#141426;
-  border:1px solid #292941;
-  color:#aaa;
-  padding:8px 12px;
-  border-radius:12px;
-  margin-bottom:10px;
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:#222;
+  color:white;
+  font-size:27px;
 }
 
-.card{
-  background:#0e0e1bdd;
-  border:1px solid #00d9ff25;
-  border-radius:24px;
-  padding:14px;
-  box-shadow:0 20px 60px #0008;
+.coin{
+  background:#222;
+  border:1px solid #ffd21c55;
+  padding:8px 13px;
+  border-radius:20px;
+  color:#ffd21c;
+  font-weight:bold;
 }
+
+/* TITLE */
 
 .title{
+  position:absolute;
+  top:72px;
+  left:0;
+  width:100%;
   text-align:center;
-  font-size:22px;
+  z-index:10;
+  color:white;
+  font-size:27px;
   font-weight:1000;
+  letter-spacing:1px;
+  text-shadow:3px 3px #000;
 }
 
 .subtitle{
-  text-align:center;
-  color:#77778c;
-  font-size:11px;
-  margin:4px 0 10px;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:6px;
-  margin-bottom:10px;
-}
-
-.stat{
-  background:#090914;
-  border:1px solid #202038;
-  border-radius:12px;
-  padding:7px 3px;
-  text-align:center;
-}
-
-.stat strong{
-  display:block;
-  font-size:16px;
-}
-
-.stat small{
-  color:#66667b;
-  font-size:7px;
-}
-
-.gameWrap{
-  position:relative;
-  width:min(92vw,400px);
-  aspect-ratio:3/4;
-  margin:auto;
-}
-
-canvas{
+  position:absolute;
+  top:105px;
   width:100%;
-  height:100%;
-  display:block;
-  border-radius:20px;
-  border:1px solid #00eaff45;
-  background:#070713;
-  box-shadow:
-    0 0 30px #00eaff15,
-    inset 0 0 30px #00eaff08;
-  cursor:crosshair;
+  text-align:center;
+  color:#aaa;
+  font-size:10px;
+  letter-spacing:2px;
+  z-index:10;
 }
+
+/* PATH */
+
+.path{
+  position:absolute;
+  left:12%;
+  right:12%;
+  top:135px;
+  bottom:205px;
+  border:7px solid #eeeeee;
+  border-radius:45px;
+  box-shadow:
+    0 0 5px #fff,
+    inset 0 0 10px #000;
+}
+
+/* BOTTLE */
+
+.bottle{
+  position:absolute;
+  width:52px;
+  height:88px;
+  z-index:8;
+  transform-origin:center;
+}
+
+.bottleBody{
+  position:absolute;
+  left:6px;
+  top:20px;
+  width:40px;
+  height:62px;
+  border-radius:10px 10px 14px 14px;
+  background:
+    linear-gradient(90deg,#075a21,#2ee65c,#075a21);
+  border:3px solid #75ff8d;
+  box-shadow:
+    0 0 15px #22ff5c66,
+    inset 0 0 10px #0008;
+}
+
+.bottleNeck{
+  position:absolute;
+  left:16px;
+  top:3px;
+  width:20px;
+  height:28px;
+  border-radius:7px 7px 3px 3px;
+  background:linear-gradient(
+    90deg,
+    #064b1b,
+    #48ef69,
+    #064b1b
+  );
+  border:3px solid #72ff88;
+  z-index:2;
+}
+
+.bottleCap{
+  position:absolute;
+  left:16px;
+  top:0;
+  width:20px;
+  height:8px;
+  border-radius:4px;
+  background:#aaa;
+  z-index:4;
+}
+
+.bottleLabel{
+  position:absolute;
+  left:10px;
+  top:42px;
+  width:32px;
+  height:20px;
+  background:#151515;
+  border:2px solid #8cff9a;
+  z-index:4;
+}
+
+/* GUN */
+
+.gun{
+  position:absolute;
+  left:50%;
+  bottom:112px;
+  width:145px;
+  height:90px;
+  transform-origin:18px 45px;
+  z-index:15;
+  pointer-events:none;
+}
+
+.barrel{
+  position:absolute;
+  left:15px;
+  top:30px;
+  width:95px;
+  height:20px;
+  border-radius:12px 4px 4px 12px;
+  background:linear-gradient(#ddd,#777,#ddd);
+  border:2px solid #333;
+}
+
+.barrel2{
+  position:absolute;
+  left:90px;
+  top:34px;
+  width:42px;
+  height:12px;
+  background:#aaa;
+  border:2px solid #333;
+}
+
+.handle{
+  position:absolute;
+  left:18px;
+  top:48px;
+  width:42px;
+  height:52px;
+  border-radius:5px 8px 15px 12px;
+  background:linear-gradient(
+    90deg,
+    #5d2c0e,
+    #b96c2d,
+    #5d2c0e
+  );
+  transform:rotate(-18deg);
+  border:3px solid #3b1b08;
+}
+
+.trigger{
+  position:absolute;
+  left:27px;
+  top:49px;
+  width:15px;
+  height:20px;
+  border:3px solid #222;
+  border-top:0;
+  border-radius:0 0 10px 10px;
+}
+
+.muzzle{
+  position:absolute;
+  left:127px;
+  top:29px;
+  width:25px;
+  height:22px;
+  border-radius:50%;
+  background:#222;
+  border:3px solid #777;
+}
+
+/* BULLET */
+
+.bullet{
+  position:absolute;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#ffd21c;
+  box-shadow:
+    0 0 8px #fff,
+    0 0 18px #ff9d00;
+  z-index:14;
+}
+
+/* UI */
+
+.hud{
+  position:absolute;
+  left:50%;
+  bottom:35px;
+  transform:translateX(-50%);
+  display:flex;
+  gap:20px;
+  align-items:center;
+  z-index:20;
+}
+
+.score{
+  color:white;
+  font-size:38px;
+  font-weight:1000;
+  text-shadow:3px 3px #000;
+}
+
+.bullets{
+  display:flex;
+  gap:4px;
+}
+
+.bulletIcon{
+  width:8px;
+  height:22px;
+  border-radius:5px 5px 2px 2px;
+  background:#ffd21c;
+  box-shadow:0 0 5px #ffd21c;
+}
+
+/* FIRE */
+
+.flash{
+  position:absolute;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:
+    0 0 15px #fff,
+    0 0 35px #ff9d00;
+  z-index:30;
+  pointer-events:none;
+}
+
+/* HIT */
+
+.hit{
+  position:absolute;
+  color:#ffd21c;
+  font-size:26px;
+  font-weight:1000;
+  z-index:40;
+  pointer-events:none;
+  animation:hit .65s forwards;
+}
+
+@keyframes hit{
+  from{
+    opacity:1;
+    transform:translate(-50%,0) scale(.6);
+  }
+  to{
+    opacity:0;
+    transform:translate(-50%,-70px) scale(1.4);
+  }
+}
+
+/* OVERLAY */
 
 .overlay{
   position:absolute;
   inset:0;
+  background:#000b;
   display:none;
   align-items:center;
   justify-content:center;
-  border-radius:20px;
-  background:#000c;
-  backdrop-filter:blur(6px);
-  z-index:10;
+  z-index:50;
 }
 
 .overlay.show{
   display:flex;
 }
 
-.overlayBox{
+.box{
+  width:82%;
+  max-width:330px;
+  padding:28px;
+  border-radius:25px;
   text-align:center;
-  padding:25px;
+  background:#191919;
+  border:2px solid #555;
+  box-shadow:0 15px 60px #000;
 }
 
-.overlayIcon{
-  font-size:55px;
-  animation:float .9s infinite alternate;
+.big{
+  font-size:50px;
 }
 
-@keyframes float{
-  to{transform:translateY(-7px)}
+.box h2{
+  color:white;
+  font-size:28px;
+  margin:8px;
 }
 
-.overlayTitle{
-  font-size:27px;
-  font-weight:1000;
-  margin:5px 0;
+.box p{
+  color:#bbb;
 }
 
 .reward{
-  color:#ffd21c;
+  color:#ffd21c!important;
   font-weight:bold;
-  margin:7px;
+  margin:12px;
 }
 
-.newBest{
-  color:#00eaff;
-  font-size:12px;
-  font-weight:bold;
-  margin:5px;
-}
-
-.controls{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:7px;
-  margin-top:10px;
-}
-
-.btn{
+.play{
+  width:100%;
   border:0;
-  border-radius:13px;
-  padding:12px 4px;
-  color:#fff;
-  font-weight:900;
-  background:linear-gradient(90deg,#008cff,#962cff);
-  cursor:pointer;
+  padding:14px;
+  border-radius:14px;
+  color:white;
+  font-weight:1000;
+  font-size:15px;
+  background:linear-gradient(90deg,#008cff,#a42cff);
 }
 
-.btn:active{
-  transform:scale(.94);
-}
+/* MISSION BANNER */
 
-.btn.secondary{
-  background:#151527;
-  border:1px solid #292941;
-}
-
-.sound{
-  text-align:center;
-  margin-top:9px;
-}
-
-.sound button{
-  background:#111121;
-  border:1px solid #28283e;
-  color:#aaa;
-  padding:7px 13px;
-  border-radius:18px;
-}
-
-.hitText{
-  position:fixed;
-  color:#ffd21c;
+.banner{
+  position:absolute;
+  top:132px;
+  left:-8%;
+  width:116%;
+  height:62px;
+  background:#eee;
+  transform:rotate(-4deg);
+  z-index:5;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#050505;
   font-size:22px;
   font-weight:1000;
+  letter-spacing:1px;
+  box-shadow:0 4px 8px #0008;
+}
+
+/* Hide banner after starting */
+.banner.hide{
+  opacity:0;
   pointer-events:none;
-  z-index:50;
-  animation:hit .7s forwards;
 }
 
-@keyframes hit{
-  from{
-    opacity:1;
-    transform:translate(-50%,0) scale(.7);
-  }
-  to{
-    opacity:0;
-    transform:translate(-50%,-65px) scale(1.3);
-  }
+@media(max-height:700px){
+
+.title{
+  top:62px;
 }
 
-.muzzle{
-  position:absolute;
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:
-    0 0 12px #fff,
-    0 0 30px #00eaff;
-  pointer-events:none;
-  animation:muzzle .18s forwards;
-  z-index:20;
+.subtitle{
+  top:94px;
 }
 
-@keyframes muzzle{
-  to{
-    opacity:0;
-    transform:scale(3);
-  }
+.path{
+  top:120px;
+  bottom:175px;
 }
 
+.gun{
+  bottom:88px;
+}
+
+.hud{
+  bottom:18px;
+}
+
+}
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div id="game">
 
-<div class="header">
+<div class="top">
 
-<div>
-<div class="logo">GAME ZONE</div>
-<div class="by">BY DANISH</div>
-</div>
+<button class="back" onclick="goBack()">‹</button>
 
-<div class="coins">
+<div class="coin">
 🪙 <span id="coins">100</span>
 </div>
 
 </div>
 
-<button class="back" onclick="goBack()">← Games</button>
+<div class="title">BOTTLE SHOOT</div>
 
-<div class="card">
-
-<div class="title">🎯 BOTTLE SHOOT</div>
-<div class="subtitle">Aim • Shoot • Break</div>
-
-<div class="stats">
-
-<div class="stat">
-<strong id="score">0</strong>
-<small>SCORE</small>
+<div class="subtitle">
+AIM • SHOOT • BREAK
 </div>
 
-<div class="stat">
-<strong id="high">0</strong>
-<small>BEST</small>
+<div class="banner" id="banner">
+CHALLENGING MISSIONS
 </div>
 
-<div class="stat">
-<strong id="shots">12</strong>
-<small>SHOTS</small>
-</div>
+<div class="path" id="path"></div>
 
-<div class="stat">
-<strong id="time">30</strong>
-<small>TIME</small>
-</div>
+<div class="bottle" id="bottle">
+
+<div class="bottleNeck"></div>
+<div class="bottleCap"></div>
+<div class="bottleBody"></div>
+<div class="bottleLabel"></div>
 
 </div>
 
-<div class="gameWrap">
+<div class="gun" id="gun">
 
-<canvas id="game"></canvas>
+<div class="barrel"></div>
+<div class="barrel2"></div>
+<div class="handle"></div>
+<div class="trigger"></div>
+<div class="muzzle"></div>
+
+</div>
+
+<div class="hud">
+
+<div class="score" id="score">00</div>
+
+<div class="bullets" id="bulletBox">
+<div class="bulletIcon"></div>
+<div class="bulletIcon"></div>
+<div class="bulletIcon"></div>
+<div class="bulletIcon"></div>
+<div class="bulletIcon"></div>
+<div class="bulletIcon"></div>
+</div>
+
+</div>
 
 <div class="overlay" id="overlay">
 
-<div class="overlayBox">
+<div class="box">
 
-<div class="overlayIcon" id="overlayIcon">🎯</div>
+<div class="big">💥</div>
 
-<div class="overlayTitle" id="overlayTitle">
-GAME OVER
-</div>
+<h2>MISSION OVER</h2>
 
-<div id="finalScore">
-Score: 0
-</div>
+<p id="finalScore">Score: 0</p>
 
-<div class="reward" id="reward">
+<p class="reward" id="reward">
 +0 🪙
-</div>
+</p>
 
-<div class="newBest" id="newBest"></div>
-
-<button class="btn" onclick="restart()">
+<button class="play" onclick="restart()">
 🔄 PLAY AGAIN
 </button>
 
@@ -356,687 +534,523 @@ Score: 0
 
 </div>
 
-<div class="controls">
-
-<button class="btn" onclick="restart()">
-🔄 RESTART
-</button>
-
-<button class="btn secondary" onclick="togglePause()">
-⏸️ PAUSE
-</button>
-
-<button class="btn secondary" onclick="toggleSound()">
-<span id="soundText">🔊 SOUND</span>
-</button>
-
-</div>
-
-<div class="sound">
-Tap anywhere on the game to shoot 🎯
-</div>
-
-</div>
-
-</div>
-
 <script>
 
-const canvas=document.getElementById("game");
-const ctx=canvas.getContext("2d");
+const game=document.getElementById("game");
+const bottle=document.getElementById("bottle");
+const gun=document.getElementById("gun");
 
-let W=0;
-let H=0;
-
-let bottles=[];
+const scoreEl=document.getElementById("score");
+const coinEl=document.getElementById("coins");
+const bulletBox=document.getElementById("bulletBox");
 
 let score=0;
-let shots=12;
-let timeLeft=30;
-
-let high=Number(
-localStorage.getItem("bottle_high")||0
-);
-
+let shots=6;
 let coins=Number(
 localStorage.getItem("gzd_coins")||100
 );
 
 let running=true;
-let paused=false;
-let soundOn=true;
 
-let timer=null;
-let animation=null;
+let bottleProgress=0;
+let bottleSpeed=.00010;
 
-let lastTime=0;
+let lastTime=performance.now();
 
-document.getElementById("high").textContent=high;
-document.getElementById("coins").textContent=coins;
+let pathPoints=[];
 
-function resize(){
+coinEl.textContent=coins;
 
-const rect=canvas.getBoundingClientRect();
+/*
+Create one continuous rounded path.
+Bottle follows this path in one direction.
+*/
 
-W=Math.floor(rect.width);
-H=Math.floor(rect.height);
+function buildPath(){
 
-canvas.width=W;
-canvas.height=H;
+const w=game.clientWidth;
+const h=game.clientHeight;
 
-draw();
+const left=w*.15;
+const right=w*.85;
+const top=h*.19;
+const bottom=h*.68;
 
-}
+const r=Math.min(55,(right-left)*.12);
 
-resize();
+pathPoints=[];
 
-window.addEventListener("resize",resize);
+/* top straight */
 
-function start(){
+for(let i=0;i<=30;i++){
 
-score=0;
-shots=12;
-timeLeft=30;
+const t=i/30;
 
-running=true;
-paused=false;
-
-document.getElementById("score").textContent=score;
-document.getElementById("shots").textContent=shots;
-document.getElementById("time").textContent=timeLeft;
-
-document.getElementById("overlay").classList.remove("show");
-
-createBottles();
-
-clearInterval(timer);
-
-timer=setInterval(()=>{
-
-if(!running||paused)return;
-
-timeLeft--;
-
-document.getElementById("time").textContent=timeLeft;
-
-if(timeLeft<=0){
-
-gameOver("time");
-
-}
-
-},1000);
-
-lastTime=performance.now();
-
-cancelAnimationFrame(animation);
-
-animation=requestAnimationFrame(loop);
-
-}
-
-function createBottles(){
-
-bottles=[];
-
-const count=4;
-
-for(let i=0;i<count;i++){
-
-bottles.push(makeBottle(i));
-
-}
-
-}
-
-function makeBottle(index){
-
-const radius=24;
-
-return{
-
-x:radius+Math.random()*(W-radius*2),
-
-y:70+Math.random()*(H-150),
-
-r:radius,
-
-vx:(Math.random()>.5?1:-1)*
-(45+Math.random()*55),
-
-vy:(Math.random()>.5?1:-1)*
-(15+Math.random()*30),
-
-alive:true,
-
-rotation:Math.random()*Math.PI*2,
-
-rotSpeed:(Math.random()-.5)*1.5,
-
-hue:index
-
-};
-
-}
-
-function loop(now){
-
-if(!running){
-
-draw();
-
-return;
-
-}
-
-const dt=Math.min(
-(now-lastTime)/1000,
-.04
-);
-
-lastTime=now;
-
-if(!paused){
-
-update(dt);
-
-}
-
-draw();
-
-animation=requestAnimationFrame(loop);
-
-}
-
-function update(dt){
-
-bottles.forEach(b=>{
-
-if(!b.alive)return;
-
-b.x+=b.vx*dt;
-b.y+=b.vy*dt;
-
-b.rotation+=b.rotSpeed*dt;
-
-if(b.x-b.r<0){
-
-b.x=b.r;
-b.vx=Math.abs(b.vx);
-
-}
-
-if(b.x+b.r>W){
-
-b.x=W-b.r;
-b.vx=-Math.abs(b.vx);
-
-}
-
-if(b.y-b.r<55){
-
-b.y=55+b.r;
-b.vy=Math.abs(b.vy);
-
-}
-
-if(b.y+b.r>H-30){
-
-b.y=H-30-b.r;
-b.vy=-Math.abs(b.vy);
-
-}
-
+pathPoints.push({
+x:left+r+(right-left-r*2)*t,
+y:top
 });
 
 }
 
-function draw(){
+/* right curve */
 
-ctx.clearRect(0,0,W,H);
+for(let i=1;i<=15;i++){
 
-drawBackground();
+const a=-Math.PI/2+
+(Math.PI/2)*(i/15);
 
-bottles.forEach(
-b=>drawBottle(b)
-);
-
-drawCrosshair();
-
-}
-
-function drawBackground(){
-
-const gradient=
-ctx.createLinearGradient(
-0,0,0,H
-);
-
-gradient.addColorStop(0,"#08081a");
-gradient.addColorStop(.5,"#060b19");
-gradient.addColorStop(1,"#03040b");
-
-ctx.fillStyle=gradient;
-
-ctx.fillRect(0,0,W,H);
-
-ctx.strokeStyle="rgba(0,220,255,.04)";
-
-for(let x=0;x<W;x+=35){
-
-ctx.beginPath();
-
-ctx.moveTo(x,0);
-ctx.lineTo(x,H);
-
-ctx.stroke();
+pathPoints.push({
+x:right-r+r*Math.cos(a),
+y:top+r+r*Math.sin(a)
+});
 
 }
 
-for(let y=0;y<H;y+=35){
+/* right straight */
 
-ctx.beginPath();
+for(let i=1;i<=25;i++){
 
-ctx.moveTo(0,y);
-ctx.lineTo(W,y);
+const t=i/25;
 
-ctx.stroke();
+pathPoints.push({
+x:right,
+y:top+r+(bottom-top-r*2)*t
+});
+
+}
+
+/* bottom-right curve */
+
+for(let i=1;i<=15;i++){
+
+const a=
+0+
+(Math.PI/2)*(i/15);
+
+pathPoints.push({
+x:right-r+r*Math.cos(a),
+y:bottom-r+r*Math.sin(a)
+});
+
+}
+
+/* bottom straight */
+
+for(let i=1;i<=30;i++){
+
+const t=i/30;
+
+pathPoints.push({
+x:right-r-(right-left-r*2)*t,
+y:bottom
+});
+
+}
+
+/* bottom-left curve */
+
+for(let i=1;i<=15;i++){
+
+const a=
+Math.PI/2+
+(Math.PI/2)*(i/15);
+
+pathPoints.push({
+x:left+r+r*Math.cos(a),
+y:bottom-r+r*Math.sin(a)
+});
+
+}
+
+/* left straight */
+
+for(let i=1;i<=25;i++){
+
+const t=i/25;
+
+pathPoints.push({
+x:left,
+y:bottom-r-(bottom-top-r*2)*t
+});
+
+}
+
+/* top-left curve */
+
+for(let i=1;i<=15;i++){
+
+const a=
+Math.PI+
+(Math.PI/2)*(i/15);
+
+pathPoints.push({
+x:left+r+r*Math.cos(a),
+y:top+r+r*Math.sin(a)
+});
 
 }
 
 }
-
-function drawBottle(b){
-
-if(!b.alive)return;
-
-ctx.save();
-
-ctx.translate(b.x,b.y);
-
-ctx.rotate(b.rotation);
-
-const r=b.r;
-
-ctx.shadowBlur=14;
-ctx.shadowColor="#00eaff";
-
-const body=
-ctx.createLinearGradient(
--r,0,r,0
-);
-
-body.addColorStop(0,"#065c72");
-body.addColorStop(.45,"#27eaff");
-body.addColorStop(1,"#063b65");
-
-ctx.fillStyle=body;
-
-ctx.beginPath();
-
-ctx.roundRect(
--r*.65,
--r*.65,
-r*1.3,
-r*1.5,
-r*.3
-);
-
-ctx.fill();
-
-ctx.shadowBlur=0;
-
-ctx.fillStyle="#9cffff";
-
-ctx.beginPath();
-
-ctx.roundRect(
--r*.32,
--r*1.15,
-r*.64,
-r*.55,
-r*.12
-);
-
-ctx.fill();
-
-ctx.fillStyle="#ff2ca8";
-
-ctx.beginPath();
-
-ctx.roundRect(
--r*.58,
--r*.05,
-r*1.16,
-r*.42,
-r*.08
-);
-
-ctx.fill();
-
-ctx.fillStyle="#fff";
-
-ctx.font="bold 9px Arial";
-
-ctx.textAlign="center";
-
-ctx.fillText(
-"ZONE",
-0,
-r*.22
-);
-
-ctx.restore();
-
-}
-
-function drawCrosshair(){
 
 /*
-The actual crosshair follows the last
-pointer/touch position.
+Place bottle on path.
 */
 
-if(!pointer.active)return;
+function updateBottle(){
 
-const x=pointer.x;
-const y=pointer.y;
+if(!pathPoints.length)return;
 
-ctx.strokeStyle="#00eaff";
-ctx.lineWidth=2;
+const index=
+Math.floor(
+bottleProgress*pathPoints.length
+)%pathPoints.length;
 
-ctx.shadowBlur=10;
-ctx.shadowColor="#00eaff";
+const nextIndex=
+(index+1)%pathPoints.length;
 
-ctx.beginPath();
+const p=pathPoints[index];
+const n=pathPoints[nextIndex];
 
-ctx.arc(
-x,
-y,
-18,
-0,
-Math.PI*2
-);
+bottle.style.left=
+(p.x-26)+"px";
 
-ctx.stroke();
+bottle.style.top=
+(p.y-44)+"px";
 
-ctx.beginPath();
+const angle=
+Math.atan2(
+n.y-p.y,
+n.x-p.x
+)*180/Math.PI;
 
-ctx.moveTo(x-27,y);
-ctx.lineTo(x-8,y);
-
-ctx.moveTo(x+8,y);
-ctx.lineTo(x+27,y);
-
-ctx.moveTo(x,y-27);
-ctx.lineTo(x,y-8);
-
-ctx.moveTo(x,y+8);
-ctx.lineTo(x,y+27);
-
-ctx.stroke();
-
-ctx.shadowBlur=0;
+bottle.style.transform=
+"rotate("+angle+"deg)";
 
 }
 
-const pointer={
-x:0,
-y:0,
-active:false
-};
+/*
+Animation
+*/
 
-function pointerPosition(e){
+function loop(now){
 
-const rect=canvas.getBoundingClientRect();
+if(running){
 
-let clientX;
-let clientY;
+const dt=
+now-lastTime;
 
-if(e.touches&&e.touches.length){
+bottleProgress+=
+dt*bottleSpeed;
 
-clientX=e.touches[0].clientX;
-clientY=e.touches[0].clientY;
+if(bottleProgress>=1)
+bottleProgress-=1;
 
-}else{
-
-clientX=e.clientX;
-clientY=e.clientY;
+updateBottle();
 
 }
 
-pointer.x=clientX-rect.left;
-pointer.y=clientY-rect.top;
-pointer.active=true;
+lastTime=now;
+
+requestAnimationFrame(loop);
 
 }
 
-canvas.addEventListener(
-"pointermove",
-e=>{
+/*
+Gun aim.
+*/
 
-pointerPosition(e);
-draw();
+function aimGun(x,y){
+
+const rect=
+game.getBoundingClientRect();
+
+const gx=
+rect.width/2;
+
+const gy=
+rect.height-150;
+
+const dx=x-gx;
+const dy=y-gy;
+
+const angle=
+Math.atan2(dy,dx)*180/Math.PI;
+
+gun.style.left=
+"calc(50% - 18px)";
+
+gun.style.transform=
+"rotate("+angle+"deg)";
 
 }
-);
 
-canvas.addEventListener(
+/*
+Tap / click.
+*/
+
+game.addEventListener(
 "pointerdown",
-e=>{
+function(e){
 
-pointerPosition(e);
+if(!running)return;
 
-shoot(
-pointer.x,
-pointer.y
-);
+const rect=
+game.getBoundingClientRect();
+
+const x=
+e.clientX-rect.left;
+
+const y=
+e.clientY-rect.top;
+
+aimGun(x,y);
+
+fire(x,y);
 
 }
 );
 
-canvas.addEventListener(
-"touchstart",
-e=>{
+/*
+Fire bullet toward tap.
+*/
 
-pointerPosition(e);
-
-shoot(
-pointer.x,
-pointer.y
-);
-
-},
-{passive:true}
-);
-
-function shoot(x,y){
-
-if(!running||paused)return;
+function fire(tx,ty){
 
 if(shots<=0)return;
 
 shots--;
 
-document.getElementById("shots").textContent=shots;
+updateBullets();
 
-muzzleFlash(x,y);
+const rect=
+game.getBoundingClientRect();
 
-beep("shoot");
+const startX=
+rect.width/2+110;
 
-let hit=false;
+const startY=
+rect.height-155;
 
-for(let i=bottles.length-1;i>=0;i--){
+const dx=tx-startX;
+const dy=ty-startY;
 
-const b=bottles[i];
+const length=
+Math.sqrt(dx*dx+dy*dy);
 
-if(!b.alive)continue;
+const vx=dx/length;
+const vy=dy/length;
 
-const dx=x-b.x;
-const dy=y-b.y;
+const bullet=
+document.createElement("div");
 
-const distance=Math.sqrt(
-dx*dx+dy*dy
+bullet.className="bullet";
+
+bullet.style.left=
+(startX-4)+"px";
+
+bullet.style.top=
+(startY-4)+"px";
+
+game.appendChild(bullet);
+
+const speed=16;
+
+let x=startX;
+let y=startY;
+
+function move(){
+
+x+=vx*speed;
+y+=vy*speed;
+
+bullet.style.left=
+(x-4)+"px";
+
+bullet.style.top=
+(y-4)+"px";
+
+/*
+Check bottle collision.
+*/
+
+const br=
+bottle.getBoundingClientRect();
+
+const gr=
+game.getBoundingClientRect();
+
+const bx=
+br.left-gr.left+
+br.width/2;
+
+const by=
+br.top-gr.top+
+br.height/2;
+
+const distance=
+Math.hypot(x-bx,y-by);
+
+if(distance<42){
+
+hitBottle(
+bx,
+by,
+bullet
 );
 
-if(distance<=b.r+8){
+return;
 
-b.alive=false;
+}
+
+if(
+x<-20||
+x>rect.width+20||
+y<-20||
+y>rect.height+20
+){
+
+bullet.remove();
+
+return;
+
+}
+
+requestAnimationFrame(move);
+
+}
+
+move();
+
+flash(tx,ty);
+
+}
+
+/*
+Bottle hit.
+*/
+
+function hitBottle(x,y,bullet){
+
+bullet.remove();
 
 score+=10;
 
-coins+=1;
+scoreEl.textContent=
+String(score).padStart(2,"0");
+
+coins++;
 
 localStorage.setItem(
 "gzd_coins",
 coins
 );
 
-document.getElementById("coins").textContent=coins;
+coinEl.textContent=coins;
 
-document.getElementById("score").textContent=score;
+showHit(x,y);
 
-showHit(b.x,b.y);
+/*
+Move bottle immediately to another
+position on the same path.
+*/
 
-beep("break");
+bottleProgress+=.15;
 
-hit=true;
+if(bottleProgress>=1)
+bottleProgress-=1;
 
-setTimeout(()=>{
+updateBottle();
 
-if(running){
+}
 
-bottles[
-Math.floor(Math.random()*bottles.length)
-]=makeBottle(
-Math.floor(Math.random()*4)
+/*
+Fire flash.
+*/
+
+function flash(x,y){
+
+const el=
+document.createElement("div");
+
+el.className="flash";
+
+el.style.left=
+(x-17)+"px";
+
+el.style.top=
+(y-17)+"px";
+
+game.appendChild(el);
+
+setTimeout(
+()=>el.remove(),
+150
 );
 
 }
 
-},250);
+/*
+Hit text.
+*/
 
-break;
+function showHit(x,y){
 
-}
+const el=
+document.createElement("div");
 
-}
+el.className="hit";
 
-if(!hit){
+el.textContent="+10";
 
-showMiss(x,y);
+el.style.left=x+"px";
+el.style.top=y+"px";
 
-}
+game.appendChild(el);
 
-if(score>high){
-
-high=score;
-
-localStorage.setItem(
-"bottle_high",
-high
+setTimeout(
+()=>el.remove(),
+650
 );
 
-document.getElementById("high").textContent=high;
+}
+
+/*
+Bullets UI.
+*/
+
+function updateBullets(){
+
+bulletBox.innerHTML="";
+
+for(let i=0;i<shots;i++){
+
+const b=
+document.createElement("div");
+
+b.className="bulletIcon";
+
+bulletBox.appendChild(b);
 
 }
 
 if(shots<=0){
 
-setTimeout(
-()=>gameOver("shots"),
-450
-);
+setTimeout(gameOver,500);
 
 }
 
 }
 
-function muzzleFlash(x,y){
+/*
+Game over.
+*/
 
-const el=
-document.createElement("div");
-
-el.className="muzzle";
-
-el.style.left=
-(x-9)+"px";
-
-el.style.top=
-(y-9)+"px";
-
-document.querySelector(".gameWrap")
-.appendChild(el);
-
-setTimeout(
-()=>el.remove(),
-200
-);
-
-}
-
-function showHit(x,y){
-
-const rect=canvas.getBoundingClientRect();
-
-const el=
-document.createElement("div");
-
-el.className="hitText";
-
-el.textContent="+10";
-
-el.style.left=
-(rect.left+x)+"px";
-
-el.style.top=
-(rect.top+y)+"px";
-
-document.body.appendChild(el);
-
-setTimeout(
-()=>el.remove(),
-700
-);
-
-}
-
-function showMiss(x,y){
-
-const rect=canvas.getBoundingClientRect();
-
-const el=
-document.createElement("div");
-
-el.className="hitText";
-
-el.style.color="#777";
-
-el.textContent="MISS";
-
-el.style.left=
-(rect.left+x)+"px";
-
-el.style.top=
-(rect.top+y)+"px";
-
-document.body.appendChild(el);
-
-setTimeout(
-()=>el.remove(),
-700
-);
-
-}
-
-function gameOver(reason){
+function gameOver(){
 
 if(!running)return;
 
 running=false;
-
-clearInterval(timer);
-cancelAnimationFrame(animation);
 
 const reward=
 Math.floor(score/10);
@@ -1048,159 +1062,62 @@ localStorage.setItem(
 coins
 );
 
-document.getElementById("coins").textContent=coins;
+coinEl.textContent=coins;
 
-document.getElementById("finalScore").textContent=
+document.getElementById(
+"finalScore"
+).textContent=
 "Score: "+score;
 
-document.getElementById("reward").textContent=
+document.getElementById(
+"reward"
+).textContent=
 "+"+reward+" 🪙";
 
-document.getElementById("newBest").textContent=
-score>=high&&score>0
-?"🏆 NEW HIGH SCORE!"
-:"";
-
-document.getElementById("overlayIcon").textContent=
-reason==="time"?"⏰":"💥";
-
-document.getElementById("overlayTitle").textContent=
-reason==="time"
-?"TIME UP!"
-:"OUT OF SHOTS";
-
-document.getElementById("overlay").classList.add("show");
-
-beep("lose");
+document.getElementById(
+"overlay"
+).classList.add("show");
 
 }
+
+/*
+Restart.
+*/
 
 function restart(){
 
-start();
+score=0;
+shots=6;
+running=true;
+bottleProgress=0;
+
+scoreEl.textContent="00";
+
+updateBullets();
+
+document.getElementById(
+"overlay"
+).classList.remove("show");
+
+document.getElementById(
+"banner"
+).classList.remove("hide");
+
+setTimeout(()=>{
+
+document.getElementById(
+"banner"
+).classList.add("hide");
+
+},1000);
+
+updateBottle();
 
 }
 
-function togglePause(){
-
-if(!running)return;
-
-paused=!paused;
-
-const overlay=
-document.getElementById("overlay");
-
-if(paused){
-
-overlay.classList.add("show");
-
-document.getElementById("overlayIcon").textContent="⏸️";
-
-document.getElementById("overlayTitle").textContent="PAUSED";
-
-document.getElementById("finalScore").textContent=
-"Score: "+score;
-
-document.getElementById("reward").textContent=
-"Tap PLAY AGAIN to restart";
-
-document.getElementById("newBest").textContent="";
-
-}else{
-
-overlay.classList.remove("show");
-
-}
-
-}
-
-function toggleSound(){
-
-soundOn=!soundOn;
-
-document.getElementById("soundText").textContent=
-soundOn
-?"🔊 SOUND"
-:"🔇 SOUND";
-
-if(soundOn)beep("tap");
-
-}
-
-function beep(type){
-
-if(!soundOn)return;
-
-try{
-
-const audio=
-new(window.AudioContext||window.webkitAudioContext)();
-
-const osc=
-audio.createOscillator();
-
-const gain=
-audio.createGain();
-
-osc.connect(gain);
-
-gain.connect(audio.destination);
-
-osc.type="sine";
-
-let start=500;
-let end=700;
-
-if(type==="shoot"){
-
-start=180;
-end=90;
-
-}
-
-if(type==="break"){
-
-start=650;
-end=1100;
-
-}
-
-if(type==="lose"){
-
-start=300;
-end=100;
-
-}
-
-osc.frequency.setValueAtTime(
-start,
-audio.currentTime
-);
-
-osc.frequency.exponentialRampToValueAtTime(
-end,
-audio.currentTime+.16
-);
-
-gain.gain.setValueAtTime(
-.07,
-audio.currentTime
-);
-
-gain.gain.exponentialRampToValueAtTime(
-.001,
-audio.currentTime+.18
-);
-
-osc.start();
-
-osc.stop(
-audio.currentTime+.18
-);
-
-}catch(e){}
-
-}
+/*
+Back.
+*/
 
 function goBack(){
 
@@ -1208,7 +1125,36 @@ window.location.href="index.html";
 
 }
 
-start();
+/*
+Resize.
+*/
+
+function resize(){
+
+buildPath();
+
+updateBottle();
+
+}
+
+window.addEventListener(
+"resize",
+resize
+);
+
+buildPath();
+updateBottle();
+updateBullets();
+
+setTimeout(()=>{
+
+document.getElementById(
+"banner"
+).classList.add("hide");
+
+},1800);
+
+requestAnimationFrame(loop);
 
 </script>
 
