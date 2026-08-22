@@ -2,319 +2,399 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#070714">
 <title>Game Zone By Danish</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 
 body{
-  min-height:100vh;
-  font-family:Arial,Helvetica,sans-serif;
-  color:white;
-  background:
-    radial-gradient(circle at 20% 10%,#35116b 0%,transparent 35%),
-    radial-gradient(circle at 80% 90%,#061e63 0%,transparent 35%),
-    #05050d;
-  display:flex;
-  justify-content:center;
-  overflow-x:hidden;
+min-height:100vh;
+font-family:Arial,sans-serif;
+color:#fff;
+background:
+radial-gradient(circle at 15% 10%,#30116b,transparent 35%),
+radial-gradient(circle at 90% 80%,#002d68,transparent 35%),
+#05050d;
+overflow-x:hidden
 }
 
 body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background-image:
-    radial-gradient(circle,rgba(0,229,255,.18) 1px,transparent 1px);
-  background-size:35px 35px;
-  opacity:.25;
+content:"";
+position:fixed;
+inset:0;
+background-image:radial-gradient(circle,#00d9ff22 1px,transparent 1px);
+background-size:32px 32px;
+pointer-events:none
 }
 
 .app{
-  width:100%;
-  max-width:500px;
-  min-height:100vh;
-  padding:18px 16px 30px;
-  position:relative;
+width:100%;
+max-width:520px;
+margin:auto;
+padding:18px 15px 35px
 }
 
-.header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:22px;
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:22px
 }
 
-.brand{
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:1px;
-  background:linear-gradient(90deg,#00eaff,#b52cff,#ff2ca8);
-  -webkit-background-clip:text;
-  color:transparent;
-  text-shadow:0 0 20px rgba(0,220,255,.3);
+.logo{
+font-size:25px;
+font-weight:1000;
+letter-spacing:1px;
+background:linear-gradient(90deg,#00eaff,#9c2cff,#ff24bd);
+-webkit-background-clip:text;
+color:transparent
 }
 
 .by{
-  font-size:11px;
-  color:#aaa;
-  margin-top:3px;
-  letter-spacing:2px;
+font-size:10px;
+color:#777;
+letter-spacing:3px;
+margin-top:3px
 }
 
-.coins{
-  padding:9px 13px;
-  border:1px solid rgba(255,210,0,.4);
-  border-radius:18px;
-  background:rgba(255,190,0,.08);
-  box-shadow:0 0 18px rgba(255,190,0,.12);
-  font-weight:bold;
+.coinBox{
+padding:9px 14px;
+border-radius:20px;
+background:#171323;
+border:1px solid #ffd21c55;
+box-shadow:0 0 20px #ffd21c12;
+font-weight:bold
 }
 
-.coin{
-  color:#ffd21c;
+.coinBox span{color:#ffd21c}
+
+.page{display:none}
+.page.active{display:block;animation:pageIn .3s ease}
+
+@keyframes pageIn{
+from{opacity:0;transform:translateY(12px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+.hero{
+text-align:center;
+padding:22px 10px 20px
+}
+
+.heroIcon{
+font-size:55px;
+filter:drop-shadow(0 0 15px #00eaff);
+animation:float 2s infinite ease-in-out
+}
+
+@keyframes float{
+50%{transform:translateY(-8px)}
+}
+
+.hero h1{
+font-size:29px;
+margin:10px 0 5px;
+font-weight:1000
+}
+
+.hero p{
+color:#85859c;
+font-size:12px
+}
+
+.sectionTitle{
+font-size:15px;
+font-weight:bold;
+margin:10px 3px
+}
+
+.gameGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px
+}
+
+.gameCard{
+position:relative;
+padding:20px 12px;
+border-radius:20px;
+background:linear-gradient(145deg,#15152c,#090914);
+border:1px solid #252542;
+cursor:pointer;
+overflow:hidden;
+transition:.2s
+}
+
+.gameCard:active{transform:scale(.95)}
+
+.gameCard:before{
+content:"";
+position:absolute;
+width:90px;
+height:90px;
+background:#00eaff22;
+filter:blur(25px);
+border-radius:50%;
+right:-30px;
+top:-30px
+}
+
+.gameIcon{
+font-size:38px;
+margin-bottom:9px
+}
+
+.gameName{
+font-weight:900;
+font-size:15px
+}
+
+.gameDesc{
+font-size:10px;
+color:#77778d;
+margin-top:4px
+}
+
+.badge{
+position:absolute;
+right:9px;
+top:9px;
+font-size:8px;
+padding:4px 7px;
+border-radius:10px;
+background:#28283d;
+color:#777
 }
 
 .card{
-  background:rgba(14,14,30,.82);
-  border:1px solid rgba(0,225,255,.18);
-  border-radius:24px;
-  padding:18px;
-  box-shadow:
-    0 15px 50px rgba(0,0,0,.45),
-    inset 0 0 30px rgba(0,150,255,.03);
-  backdrop-filter:blur(10px);
+background:#0e0e1bdb;
+border:1px solid #00d9ff25;
+border-radius:25px;
+padding:18px;
+box-shadow:0 20px 60px #0008
+}
+
+.back{
+background:#141426;
+border:1px solid #292941;
+color:#aaa;
+padding:9px 13px;
+border-radius:13px;
+margin-bottom:15px;
+cursor:pointer
 }
 
 .title{
-  text-align:center;
-  margin-bottom:5px;
-  font-size:22px;
-  font-weight:900;
+text-align:center;
+font-size:22px;
+font-weight:1000
 }
 
 .subtitle{
-  text-align:center;
-  color:#85859c;
-  font-size:12px;
-  margin-bottom:18px;
+text-align:center;
+color:#77778c;
+font-size:11px;
+margin:4px 0 15px
 }
 
 .status{
-  text-align:center;
-  min-height:28px;
-  font-weight:bold;
-  color:#00eaff;
-  font-size:15px;
+text-align:center;
+color:#00eaff;
+font-weight:bold;
+font-size:14px;
+min-height:22px
 }
 
 .board{
-  width:min(88vw,360px);
-  aspect-ratio:1;
-  margin:16px auto;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:9px;
+width:min(88vw,370px);
+aspect-ratio:1;
+margin:16px auto;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:9px
 }
 
 .cell{
-  border:1px solid rgba(0,220,255,.25);
-  border-radius:18px;
-  background:linear-gradient(145deg,#111127,#080817);
-  color:white;
-  font-size:clamp(42px,14vw,68px);
-  font-weight:900;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:.18s;
-  box-shadow:inset 0 0 20px rgba(0,180,255,.03);
+border:1px solid #00d9ff35;
+border-radius:19px;
+background:linear-gradient(145deg,#14142a,#080811);
+font-size:clamp(43px,15vw,70px);
+font-weight:1000;
+color:white;
+cursor:pointer;
+transition:.15s
 }
 
-.cell:active{
-  transform:scale(.92);
-}
+.cell:active{transform:scale(.9)}
 
 .cell.x{
-  color:#00eaff;
-  text-shadow:0 0 18px #00eaff;
-  animation:pop .25s ease;
+color:#00eaff;
+text-shadow:0 0 22px #00eaff;
+animation:pop .25s
 }
 
 .cell.o{
-  color:#ff29bd;
-  text-shadow:0 0 18px #ff29bd;
-  animation:pop .25s ease;
+color:#ff29c0;
+text-shadow:0 0 22px #ff29c0;
+animation:pop .25s
 }
 
 .cell.win{
-  animation:winner .65s infinite alternate;
-  border-color:#ffd21c;
+border-color:#ffd21c;
+box-shadow:0 0 25px #ffd21c88;
+animation:win .55s infinite alternate
 }
 
 @keyframes pop{
-  0%{transform:scale(.3);opacity:0}
-  70%{transform:scale(1.12)}
-  100%{transform:scale(1);opacity:1}
+0%{transform:scale(.3);opacity:0}
+70%{transform:scale(1.1)}
+100%{transform:scale(1);opacity:1}
 }
 
-@keyframes winner{
-  from{
-    box-shadow:0 0 8px rgba(255,210,28,.3);
-  }
-  to{
-    box-shadow:0 0 28px rgba(255,210,28,.9);
-  }
+@keyframes win{
+to{transform:scale(1.05);box-shadow:0 0 35px #ffd21c}
 }
 
 .controls{
-  display:flex;
-  gap:10px;
-  margin-top:8px;
+display:flex;
+gap:9px
 }
 
-button{
-  font-family:inherit;
+.btn{
+flex:1;
+border:0;
+padding:14px;
+border-radius:15px;
+color:white;
+font-weight:900;
+cursor:pointer;
+background:linear-gradient(90deg,#008cff,#962cff);
+box-shadow:0 8px 25px #4820ff40
 }
 
-.mainBtn{
-  flex:1;
-  border:0;
-  border-radius:15px;
-  padding:14px;
-  color:white;
-  font-weight:900;
-  font-size:14px;
-  cursor:pointer;
-  background:linear-gradient(90deg,#007cff,#9b19ff);
-  box-shadow:0 8px 25px rgba(83,30,255,.28);
-  transition:.18s;
-}
-
-.mainBtn:active{
-  transform:scale(.95);
-}
-
-.secondary{
-  background:#151527;
-  border:1px solid #292943;
+.btn.secondary{
+background:#151527;
+border:1px solid #292941
 }
 
 .stats{
-  display:flex;
-  gap:10px;
-  margin-top:15px;
+display:flex;
+gap:8px;
+margin-top:12px
 }
 
 .stat{
-  flex:1;
-  text-align:center;
-  background:#0b0b18;
-  border-radius:14px;
-  padding:11px 5px;
-  border:1px solid #1c1c35;
+flex:1;
+text-align:center;
+padding:10px;
+background:#090914;
+border-radius:14px;
+border:1px solid #1e1e35
 }
 
 .stat strong{
-  display:block;
-  font-size:18px;
+display:block;
+font-size:18px
 }
 
-.stat span{
-  color:#77778e;
-  font-size:10px;
+.stat small{
+color:#68687e;
+font-size:9px
 }
 
 .sound{
-  margin-top:16px;
-  display:flex;
-  justify-content:center;
+text-align:center;
+margin-top:14px
 }
 
-.soundBtn{
-  background:#101021;
-  color:#aaa;
-  border:1px solid #28283d;
-  padding:9px 15px;
-  border-radius:20px;
-  cursor:pointer;
+.sound button{
+background:#111121;
+border:1px solid #28283e;
+color:#aaa;
+padding:8px 14px;
+border-radius:20px
 }
+
+.profile{
+display:flex;
+align-items:center;
+gap:12px;
+background:#101021;
+border:1px solid #272740;
+padding:13px;
+border-radius:18px;
+margin-bottom:16px
+}
+
+.avatar{
+width:45px;
+height:45px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:23px;
+background:linear-gradient(135deg,#00eaff,#9c2cff)
+}
+
+.profileName{font-weight:bold}
+.profileSub{font-size:10px;color:#777}
 
 .popup{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:20;
-  backdrop-filter:blur(7px);
+position:fixed;
+inset:0;
+background:#000b;
+display:none;
+align-items:center;
+justify-content:center;
+z-index:50;
+backdrop-filter:blur(8px)
 }
 
-.popup.show{
-  display:flex;
-  animation:fade .2s ease;
-}
-
-@keyframes fade{
-  from{opacity:0}
-  to{opacity:1}
-}
+.popup.show{display:flex}
 
 .popupBox{
-  width:min(88%,350px);
-  background:linear-gradient(145deg,#16162c,#080813);
-  border:1px solid #743cff;
-  border-radius:25px;
-  padding:28px;
-  text-align:center;
-  box-shadow:0 0 60px rgba(117,40,255,.35);
-  animation:popup .3s ease;
+width:min(88%,350px);
+background:linear-gradient(145deg,#17172d,#080811);
+border:1px solid #813cff;
+border-radius:26px;
+padding:28px;
+text-align:center;
+box-shadow:0 0 70px #6825ff55;
+animation:popup .3s
 }
 
 @keyframes popup{
-  from{transform:scale(.7)}
-  to{transform:scale(1)}
+from{transform:scale(.7);opacity:0}
+to{transform:scale(1);opacity:1}
 }
 
-.resultIcon{
-  font-size:58px;
-  margin-bottom:10px;
-}
-
+.resultIcon{font-size:58px}
 .resultTitle{
-  font-size:27px;
-  font-weight:900;
+font-size:27px;
+font-weight:1000;
+margin:5px
 }
 
 .reward{
-  color:#ffd21c;
-  font-weight:bold;
-  margin:10px;
+color:#ffd21c;
+font-weight:bold;
+margin:8px
 }
 
 .confetti{
-  position:fixed;
-  width:7px;
-  height:15px;
-  top:-20px;
-  z-index:30;
-  animation:fall 1.5s linear forwards;
+position:fixed;
+width:7px;
+height:15px;
+top:-20px;
+z-index:100;
+animation:fall 1.5s linear forwards
 }
 
 @keyframes fall{
-  to{
-    transform:translateY(110vh) rotate(720deg);
-  }
+to{transform:translateY(110vh) rotate(720deg)}
 }
 </style>
 </head>
@@ -323,79 +403,153 @@ button{
 
 <div class="app">
 
-  <div class="header">
-    <div>
-      <div class="brand">GAME ZONE</div>
-      <div class="by">BY DANISH</div>
-    </div>
+<header>
+<div>
+<div class="logo">GAME ZONE</div>
+<div class="by">BY DANISH</div>
+</div>
 
-    <div class="coins">
-      🪙 <span id="coins">100</span>
-    </div>
-  </div>
+<div class="coinBox">🪙 <span id="coins">100</span></div>
+</header>
 
-  <div class="card">
+<!-- HOME -->
 
-    <div class="title">❌⭕ TIC-TAC-TOE</div>
-    <div class="subtitle">Challenge the Bot</div>
+<section id="home" class="page active">
 
-    <div class="status" id="status">Your turn — X</div>
+<div class="profile">
+<div class="avatar">🎮</div>
+<div>
+<div class="profileName">Danish Gamer</div>
+<div class="profileSub">Game Zone Player</div>
+</div>
+</div>
 
-    <div class="board" id="board">
-      <button class="cell" data-i="0"></button>
-      <button class="cell" data-i="1"></button>
-      <button class="cell" data-i="2"></button>
-      <button class="cell" data-i="3"></button>
-      <button class="cell" data-i="4"></button>
-      <button class="cell" data-i="5"></button>
-      <button class="cell" data-i="6"></button>
-      <button class="cell" data-i="7"></button>
-      <button class="cell" data-i="8"></button>
-    </div>
+<div class="hero">
+<div class="heroIcon">🎮</div>
+<h1>GAME ZONE</h1>
+<p>Play • Score • Compete</p>
+</div>
 
-    <div class="controls">
-      <button class="mainBtn" onclick="newGame()">🔄 NEW GAME</button>
-      <button class="mainBtn secondary" onclick="resetCoins()">🪙 RESET</button>
-    </div>
+<div class="sectionTitle">🔥 Available Games</div>
 
-    <div class="stats">
-      <div class="stat">
-        <strong id="wins">0</strong>
-        <span>WINS</span>
-      </div>
+<div class="gameGrid">
 
-      <div class="stat">
-        <strong id="draws">0</strong>
-        <span>DRAWS</span>
-      </div>
+<div class="gameCard" onclick="openGame()">
+<div class="gameIcon">❌⭕</div>
+<div class="gameName">Tic-Tac-Toe</div>
+<div class="gameDesc">Challenge the Bot</div>
+</div>
 
-      <div class="stat">
-        <strong id="losses">0</strong>
-        <span>LOSSES</span>
-      </div>
-    </div>
+<div class="gameCard">
+<div class="gameIcon">🐍</div>
+<div class="gameName">Snake</div>
+<div class="gameDesc">Coming Soon</div>
+<div class="badge">SOON</div>
+</div>
 
-    <div class="sound">
-      <button class="soundBtn" id="soundBtn" onclick="toggleSound()">
-        🔊 Sound ON
-      </button>
-    </div>
+<div class="gameCard">
+<div class="gameIcon">🎯</div>
+<div class="gameName">Bottle Shoot</div>
+<div class="gameDesc">Coming Soon</div>
+<div class="badge">SOON</div>
+</div>
 
-  </div>
+<div class="gameCard">
+<div class="gameIcon">🎲</div>
+<div class="gameName">Ludo</div>
+<div class="gameDesc">Coming Soon</div>
+<div class="badge">SOON</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- TIC TAC TOE -->
+
+<section id="game" class="page">
+
+<button class="back" onclick="goHome()">← Games</button>
+
+<div class="card">
+
+<div class="title">❌⭕ TIC-TAC-TOE</div>
+<div class="subtitle">Challenge the Bot</div>
+
+<div class="status" id="status">Your turn — X</div>
+
+<div class="board">
+
+<button class="cell" data-i="0"></button>
+<button class="cell" data-i="1"></button>
+<button class="cell" data-i="2"></button>
+<button class="cell" data-i="3"></button>
+<button class="cell" data-i="4"></button>
+<button class="cell" data-i="5"></button>
+<button class="cell" data-i="6"></button>
+<button class="cell" data-i="7"></button>
+<button class="cell" data-i="8"></button>
+
+</div>
+
+<div class="controls">
+<button class="btn" onclick="newGame()">🔄 NEW GAME</button>
+<button class="btn secondary" onclick="resetCoins()">RESET</button>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<strong id="wins">0</strong>
+<small>WINS</small>
+</div>
+
+<div class="stat">
+<strong id="draws">0</strong>
+<small>DRAWS</small>
+</div>
+
+<div class="stat">
+<strong id="losses">0</strong>
+<small>LOSSES</small>
+</div>
+
+</div>
+
+<div class="sound">
+<button id="soundBtn" onclick="toggleSound()">🔊 Sound ON</button>
+</div>
+
+</div>
+
+</section>
+
 </div>
 
 <div class="popup" id="popup">
-  <div class="popupBox">
-    <div class="resultIcon" id="resultIcon">🏆</div>
-    <div class="resultTitle" id="resultTitle">YOU WIN!</div>
-    <div class="reward" id="reward">+20 🪙</div>
-    <button class="mainBtn" onclick="closePopup();newGame()">
-      PLAY AGAIN
-    </button>
-  </div>
+
+<div class="popupBox">
+
+<div class="resultIcon" id="resultIcon">🏆</div>
+
+<div class="resultTitle" id="resultTitle">
+YOU WIN!
+</div>
+
+<div class="reward" id="reward">
++20 🪙
+</div>
+
+<button class="btn" onclick="closePopup();newGame()">
+PLAY AGAIN
+</button>
+
+</div>
+
 </div>
 
 <script>
+
 let board=["","","","","","","","",""];
 let gameOver=false;
 let playerTurn=true;
@@ -409,296 +563,347 @@ let losses=Number(localStorage.getItem("gzd_losses")||0);
 const cells=document.querySelectorAll(".cell");
 
 function updateUI(){
-  document.getElementById("coins").textContent=coins;
-  document.getElementById("wins").textContent=wins;
-  document.getElementById("draws").textContent=draws;
-  document.getElementById("losses").textContent=losses;
 
-  localStorage.setItem("gzd_coins",coins);
-  localStorage.setItem("gzd_wins",wins);
-  localStorage.setItem("gzd_draws",draws);
-  localStorage.setItem("gzd_losses",losses);
+document.getElementById("coins").textContent=coins;
+document.getElementById("wins").textContent=wins;
+document.getElementById("draws").textContent=draws;
+document.getElementById("losses").textContent=losses;
+
+localStorage.setItem("gzd_coins",coins);
+localStorage.setItem("gzd_wins",wins);
+localStorage.setItem("gzd_draws",draws);
+localStorage.setItem("gzd_losses",losses);
 }
 
 updateUI();
 
 function beep(type){
-  if(!soundOn) return;
 
-  try{
-    const ctx=new (window.AudioContext||window.webkitAudioContext)();
-    const osc=ctx.createOscillator();
-    const gain=ctx.createGain();
+if(!soundOn)return;
 
-    osc.connect(gain);
-    gain.connect(ctx.destination);
+try{
 
-    if(type==="win"){
-      osc.frequency.setValueAtTime(500,ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(1000,ctx.currentTime+.35);
-    }
-    else if(type==="lose"){
-      osc.frequency.setValueAtTime(400,ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(150,ctx.currentTime+.35);
-    }
-    else{
-      osc.frequency.setValueAtTime(520,ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(700,ctx.currentTime+.08);
-    }
+let ctx=new(window.AudioContext||window.webkitAudioContext)();
+let osc=ctx.createOscillator();
+let gain=ctx.createGain();
 
-    gain.gain.setValueAtTime(.08,ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.35);
+osc.connect(gain);
+gain.connect(ctx.destination);
 
-    osc.start();
-    osc.stop(ctx.currentTime+.35);
-  }catch(e){}
+let freq=type==="win"?700:type==="lose"?220:520;
+
+osc.frequency.value=freq;
+osc.type="sine";
+
+gain.gain.setValueAtTime(.08,ctx.currentTime);
+gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.25);
+
+osc.start();
+osc.stop(ctx.currentTime+.25);
+
+}catch(e){}
+
 }
 
 function toggleSound(){
-  soundOn=!soundOn;
 
-  document.getElementById("soundBtn").textContent=
-    soundOn ? "🔊 Sound ON" : "🔇 Sound OFF";
+soundOn=!soundOn;
 
-  if(soundOn) beep("tap");
+document.getElementById("soundBtn").textContent=
+soundOn?"🔊 Sound ON":"🔇 Sound OFF";
+
+}
+
+function openGame(){
+
+document.getElementById("home").classList.remove("active");
+document.getElementById("game").classList.add("active");
+
+newGame();
+
+}
+
+function goHome(){
+
+document.getElementById("game").classList.remove("active");
+document.getElementById("home").classList.add("active");
+
 }
 
 cells.forEach(cell=>{
-  cell.addEventListener("click",()=>{
-    const i=Number(cell.dataset.i);
 
-    if(!playerTurn || gameOver || board[i]) return;
+cell.addEventListener("click",()=>{
 
-    board[i]="X";
-    render();
-    beep("tap");
+let i=Number(cell.dataset.i);
 
-    let result=checkWinner();
+if(!playerTurn||gameOver||board[i])return;
 
-    if(result){
-      finish(result);
-      return;
-    }
+board[i]="X";
 
-    playerTurn=false;
-    document.getElementById("status").textContent="🤖 Bot is thinking...";
+render();
 
-    setTimeout(botMove,450);
-  });
+beep("tap");
+
+let result=checkWinner();
+
+if(result){
+
+finish(result);
+return;
+
+}
+
+playerTurn=false;
+
+document.getElementById("status").textContent="🤖 Bot is thinking...";
+
+setTimeout(botMove,450);
+
+});
+
 });
 
 function render(){
-  cells.forEach((cell,i)=>{
-    cell.textContent=board[i];
 
-    cell.classList.remove("x","o");
+cells.forEach((cell,i)=>{
 
-    if(board[i]==="X") cell.classList.add("x");
-    if(board[i]==="O") cell.classList.add("o");
-  });
+cell.textContent=board[i];
+
+cell.classList.remove("x","o");
+
+if(board[i]==="X")cell.classList.add("x");
+if(board[i]==="O")cell.classList.add("o");
+
+});
+
 }
 
 function botMove(){
-  if(gameOver) return;
 
-  let available=board
-    .map((v,i)=>v===""?i:null)
-    .filter(v=>v!==null);
+if(gameOver)return;
 
-  if(!available.length) return;
+let move=findBestMove();
 
-  let move=findBestMove();
+board[move]="O";
 
-  board[move]="O";
-  render();
-  beep("tap");
+render();
 
-  let result=checkWinner();
+beep("tap");
 
-  if(result){
-    finish(result);
-    return;
-  }
+let result=checkWinner();
 
-  playerTurn=true;
-  document.getElementById("status").textContent="Your turn — X";
+if(result){
+
+finish(result);
+return;
+
+}
+
+playerTurn=true;
+
+document.getElementById("status").textContent="Your turn — X";
+
 }
 
 function findBestMove(){
 
-  // Win if possible
-  for(let i=0;i<9;i++){
-    if(board[i]===""){
-      board[i]="O";
-      if(checkWinner()==="O"){
-        board[i]="";
-        return i;
-      }
-      board[i]="";
-    }
-  }
+for(let i=0;i<9;i++){
 
-  // Block player
-  for(let i=0;i<9;i++){
-    if(board[i]===""){
-      board[i]="X";
-      if(checkWinner()==="X"){
-        board[i]="";
-        return i;
-      }
-      board[i]="";
-    }
-  }
+if(board[i]===""){
 
-  // Center
-  if(board[4]==="") return 4;
+board[i]="O";
 
-  // Corners
-  let corners=[0,2,6,8].filter(i=>board[i]==="");
-  if(corners.length){
-    return corners[Math.floor(Math.random()*corners.length)];
-  }
+if(checkWinner()==="O"){
+board[i]="";
+return i;
+}
 
-  let available=board
-    .map((v,i)=>v===""?i:null)
-    .filter(v=>v!==null);
+board[i]="";
 
-  return available[Math.floor(Math.random()*available.length)];
+}
+
+}
+
+for(let i=0;i<9;i++){
+
+if(board[i]===""){
+
+board[i]="X";
+
+if(checkWinner()==="X"){
+board[i]="";
+return i;
+}
+
+board[i]="";
+
+}
+
+}
+
+if(board[4]==="")return 4;
+
+let corners=[0,2,6,8].filter(i=>board[i]==="");
+
+if(corners.length)
+return corners[Math.floor(Math.random()*corners.length)];
+
+let available=board
+.map((v,i)=>v===""?i:null)
+.filter(v=>v!==null);
+
+return available[Math.floor(Math.random()*available.length)];
+
 }
 
 function checkWinner(){
 
-  const lines=[
-    [0,1,2],
-    [3,4,5],
-    [6,7,8],
-    [0,3,6],
-    [1,4,7],
-    [2,5,8],
-    [0,4,8],
-    [2,4,6]
-  ];
+const lines=[
+[0,1,2],[3,4,5],[6,7,8],
+[0,3,6],[1,4,7],[2,5,8],
+[0,4,8],[2,4,6]
+];
 
-  for(const line of lines){
+for(const line of lines){
 
-    const [a,b,c]=line;
+let[a,b,c]=line;
 
-    if(
-      board[a] &&
-      board[a]===board[b] &&
-      board[a]===board[c]
-    ){
-      line.forEach(i=>cells[i].classList.add("win"));
-      return board[a];
-    }
-  }
+if(board[a]&&board[a]===board[b]&&board[a]===board[c]){
 
-  if(board.every(Boolean)) return "draw";
+line.forEach(i=>cells[i].classList.add("win"));
 
-  return null;
+return board[a];
+
+}
+
+}
+
+if(board.every(Boolean))return"draw";
+
+return null;
+
 }
 
 function finish(result){
 
-  gameOver=true;
-  playerTurn=false;
+gameOver=true;
+playerTurn=false;
 
-  let icon="";
-  let title="";
-  let reward="";
+let icon,title,reward;
 
-  if(result==="X"){
-    wins++;
-    coins+=20;
+if(result==="X"){
 
-    icon="🏆";
-    title="YOU WIN!";
-    reward="+20 🪙";
+wins++;
+coins+=20;
 
-    beep("win");
-    confetti();
-  }
-  else if(result==="O"){
-    losses++;
+icon="🏆";
+title="YOU WIN!";
+reward="+20 🪙";
 
-    icon="🤖";
-    title="BOT WINS";
-    reward="+0 🪙";
+beep("win");
+confetti();
 
-    beep("lose");
-  }
-  else{
-    draws++;
-    coins+=5;
+}
 
-    icon="🤝";
-    title="DRAW!";
-    reward="+5 🪙";
+else if(result==="O"){
 
-    beep("tap");
-  }
+losses++;
 
-  updateUI();
+icon="🤖";
+title="BOT WINS";
+reward="+0 🪙";
 
-  document.getElementById("resultIcon").textContent=icon;
-  document.getElementById("resultTitle").textContent=title;
-  document.getElementById("reward").textContent=reward;
+beep("lose");
 
-  setTimeout(()=>{
-    document.getElementById("popup").classList.add("show");
-  },500);
+}
+
+else{
+
+draws++;
+coins+=5;
+
+icon="🤝";
+title="DRAW!";
+reward="+5 🪙";
+
+beep("tap");
+
+}
+
+updateUI();
+
+document.getElementById("resultIcon").textContent=icon;
+document.getElementById("resultTitle").textContent=title;
+document.getElementById("reward").textContent=reward;
+
+setTimeout(()=>{
+document.getElementById("popup").classList.add("show");
+},450);
+
 }
 
 function closePopup(){
-  document.getElementById("popup").classList.remove("show");
+
+document.getElementById("popup").classList.remove("show");
+
 }
 
 function newGame(){
 
-  closePopup();
+closePopup();
 
-  board=["","","","","","","","",""];
-  gameOver=false;
-  playerTurn=true;
+board=["","","","","","","","",""];
+gameOver=false;
+playerTurn=true;
 
-  cells.forEach(cell=>{
-    cell.textContent="";
-    cell.classList.remove("x","o","win");
-  });
+cells.forEach(c=>{
+c.textContent="";
+c.classList.remove("x","o","win");
+});
 
-  document.getElementById("status").textContent="Your turn — X";
+document.getElementById("status").textContent="Your turn — X";
+
 }
 
 function resetCoins(){
 
-  coins=100;
-  wins=0;
-  draws=0;
-  losses=0;
+coins=100;
+wins=0;
+draws=0;
+losses=0;
 
-  updateUI();
-  beep("tap");
+updateUI();
+
 }
 
 function confetti(){
 
-  for(let i=0;i<35;i++){
+for(let i=0;i<35;i++){
 
-    const c=document.createElement("div");
+let c=document.createElement("div");
 
-    c.className="confetti";
+c.className="confetti";
 
-    c.style.left=Math.random()*100+"vw";
-    c.style.animationDelay=Math.random()*.5+"s";
-    c.style.background=
-      ["#00eaff","#ff29bd","#ffd21c","#7c3cff","#fff"]
-      [Math.floor(Math.random()*5)];
+c.style.left=Math.random()*100+"vw";
 
-    document.body.appendChild(c);
+c.style.background=[
+"#00eaff",
+"#ff29bd",
+"#ffd21c",
+"#7c3cff",
+"#fff"
+][Math.floor(Math.random()*5)];
 
-    setTimeout(()=>c.remove(),1800);
-  }
+c.style.animationDelay=Math.random()*.4+"s";
+
+document.body.appendChild(c);
+
+setTimeout(()=>c.remove(),1700);
+
 }
+
+}
+
 </script>
 
 </body>
