@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Ludo - Game Zone By Danish</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  min-height:100vh;
+  background:#05050d;
+  color:white;
+  font-family:Arial,sans-serif;
+}
+
+.app{
+  width:min(100%,620px);
+  margin:auto;
+  padding:10px;
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:1000;
+  background:linear-gradient(90deg, #00eaff, #9c2cff, #ff24bd);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.by{
+  color:#777;
+  font-size:8px;
+  letter-spacing:3px;
+}
+
+.coins{
+  background:#171323;
+  border:1px solid #ffd21c55;
+  border-radius:20px;
+  padding:8px 12px;
+  font-weight:bold;
+}
+
+.coins b{
+  color:#ffd21c;
+}
+
+.back{
+  background:#141426;
+  border:1px solid #292941;
+  color:#aaa;
+  border-radius:12px;
+  padding:9px 13px;
+  margin-bottom:10px;
+  cursor:pointer;
+}
+
+.card{
+  background:#0e0e1b;
+  border:1px solid #00d9ff25;
+  border-radius:24px;
+  padding:11px;
+  box-shadow:0 20px 60px #0008;
+}
+
+.title{
+  text-align:center;
+  font-size:24px;
+  font-weight:1000;
+}
+
+.subtitle{
+  text-align:center;
+  color:#77778c;
+  font-size:10px;
+  margin:4px 0 10px;
+}
+
+.setup{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-bottom:8px;
+}
+
+select, .setup button{
+  width:100%;
+  padding:10px;
+  border-radius:11px;
+  border:1px solid #292941;
+  background:#151527;
+  color:white;
+  font-weight:900;
+}
+
+.setup button{
+  grid-column:1/-1;
+  border:0;
+  background:linear-gradient(90deg, #008cff, #962cff);
+  cursor:pointer;
+}
+
+.info{
+  display:flex;
+  justify-content:space-between;
+  background:#090914;
+  border:1px solid #202038;
+  border-radius:11px;
+  padding:9px;
+  margin-bottom:8px;
+  font-size:12px;
+}
+
+.boardWrap{
+  width:100%;
+  position:relative;
+}
+
+canvas{
+  width:100%;
+  display:block;
+  aspect-ratio:1;
+  border-radius:18px;
+  border:2px solid #ffffff22;
+  touch-action:manipulation;
+}
+
+.message{
+  text-align:center;
+  color:#ccc;
+  min-height:26px;
+  font-size:11px;
+  padding:6px;
+}
+
+.dice{
+  display:block;
+  width:80px;
+  height:58px;
+  margin:auto;
+  border:0;
+  border-radius:16px;
+  background:linear-gradient(90deg, #ff3d3d, #ff7900);
+  color:#fff;
+  font-size:25px;
+  cursor:pointer;
+}
+
+.dice:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+.buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:8px;
+}
+
+.buttons button{
+  padding:10px;
+  border-radius:11px;
+  border:1px solid #292941;
+  background:#151527;
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:#000c;
+  display:none;
+  place-items:center;
+  z-index:20;
+}
+
+.overlay.show{
+  display:grid;
+}
+
+.overlayBox{
+  width:min(88%,350px);
+  background:#151520;
+  border:1px solid #34344c;
+  border-radius:22px;
+  padding:25px;
+  text-align:center;
+}
+
+.overlayIcon{
+  font-size:55px;
+}
+
+.overlayBox h2{
+  margin:7px 0;
+}
+
+.overlayBox button{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border:0;
+  border-radius:12px;
+  color:#fff;
+  font-weight:900;
+  background:linear-gradient(90deg, #008cff, #962cff);
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+  <div class="header">
+    <div>
+      <div class="logo">GAME ZONE</div>
+      <div class="by">BY DANISH</div>
+    </div>
+    <div class="coins">
+      🪙 <b id="coins">100</b>
+    </div>
+  </div>
+
+  <button class="back" onclick="location.href='index.html'">← Games</button>
+
+  <div class="card">
+    <div class="title">🎲 LUDO</div>
+    <div class="subtitle">Classic Ludo • Bots • Local Multiplayer</div>
+
+    <div class="setup">
+      <select id="playerCount">
+        <option value="2">2 Players</option>
+        <option value="3">3 Players</option>
+        <option value="4" selected>4 Players</option>
+      </select>
+
+      <select id="gameMode">
+        <option value="bot">Vs Bots</option>
+        <option value="local">Local Multiplayer</option>
+      </select>
+
+      <button onclick="newGame()">🎮 START GAME</button>
+    </div>
+
+    <div class="info">
+      <span id="turnText">Red's Turn</span>
+      <span>🎲 <b id="diceValue">-</b></span>
+    </div>
+
+    <div class="boardWrap">
+      <canvas id="board" width="750" height="750"></canvas>
+    </div>
+
+    <div class="message" id="message">Roll the dice.</div>
+
+    <button class="dice" id="diceBtn" onclick="rollDice()">🎲</button>
+
+    <div class="buttons">
+      <button onclick="newGame()">🔄 NEW GAME</button>
+      <button onclick="location.href='index.html'">← GAMES</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="overlayBox">
+    <div class="overlayIcon">🏆</div>
+    <h2 id="winnerText">RED WINS!</h2>
+    <div>All 4 tokens reached home.</div>
+    <button onclick="newGame()">PLAY AGAIN</button>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById("board");
+const ctx = canvas.getContext("2d");
+
+const CELL = 50;
+
+const COLORS = ["#ff3b4f", "#35e875", "#ffd43b", "#3d9cff"];
+const NAMES = ["Red", "Green", "Yellow", "Blue"];
+
+/* 52 Main Track Cells */
+const PATH = [
+  [1,6],[2,6],[3,6],[4,6],[5,6],
+  [6,5],[6,4],[6,3],[6,2],[6,1],[6,0],
+  [7,0],[8,0],
+  [8,1],[8,2],[8,3],[8,4],[8,5],
+  [9,6],[10,6],[11,6],[12,6],[13,6],[14,6],
+  [14,7],[14,8],
+  [13,8],[12,8],[11,8],[10,8],[9,8],
+  [8,9],[8,10],[8,11],[8,12],[8,13],[8,14],
+  [7,14],[6,14],
+  [6,13],[6,12],[6,11],[6,10],[6,9],
+  [5,8],[4,8],[3,8],[2,8],[1,8],[0,8],
+  [0,7],[0,6]
+];
+
+const START = [0, 13, 26, 39];
+const SAFE = new Set([0, 8, 13, 21, 26, 34, 39, 47]);
+
+const LANES = [
+  [[1,7],[2,7],[3,7],[4,7],[5,7]],
+  [[7,1],[7,2],[7,3],[7,4],[7,5]],
+  [[13,7],[12,7],[11,7],[10,7],[9,7]],
+  [[7,13],[7,12],[7,11],[7,10],[7,9]]
+];
+
+const YARDS = [
+  [[1.5,1.5],[3.5,1.5],[1.5,3.5],[3.5,3.5]],
+  [[10.5,1.5],[12.5,1.5],[10.5,3.5],[12.5,3.5]],
+  [[10.5,10.5],[12.5,10.5],[10.5,12.5],[12.5,12.5]],
+  [[1.5,10.5],[3.5,10.5],[1.5,12.5],[3.5,12.5]]
+];
+
+let players = [];
+let playerCount = 4;
+let mode = "bot";
+let currentPlayer = 0;
+let dice = 0;
+let hasRolled = false;
+let gameOver = false;
+let moving = false;
+
+let coins = Number(localStorage.getItem("gzd_coins") || 100);
+document.getElementById("coins").textContent = coins;
+
+function newGame(){
+  playerCount = Number(document.getElementById("playerCount").value);
+  mode = document.getElementById("gameMode").value;
+  currentPlayer = 0;
+  dice = 0;
+  hasRolled = false;
+  gameOver = false;
+  moving = false;
+  players = [];
+
+  for(let i=0; i<playerCount; i++){
+    players.push({
+      name: NAMES[i],
+      color: COLORS[i],
+      tokens: [-1, -1, -1, -1]
+    });
+  }
+
+  document.getElementById("overlay").classList.remove("show");
+  setMessage(players[currentPlayer].name + "'s turn — Roll the dice.");
+  updateUI();
+  draw();
+}
+
+function setMessage(text){
+  document.getElementById("message").textContent = text;
+}
+
+function updateUI(){
+  document.getElementById("turnText").textContent = gameOver ? "Game Over" : players[currentPlayer].name + "'s Turn";
+  document.getElementById("diceValue").textContent = dice || "-";
+  document.getElementById("diceBtn").disabled = gameOver || hasRolled || moving || (mode === "bot" && currentPlayer !== 0);
+}
+
+function canMove(player, tokenIndex, roll){
+  const value = player.tokens[tokenIndex];
+  if(value === 57) return false;
+  if(value === -1) return roll === 6;
+  return value + roll <= 57;
+}
+
+function getLegalTokens(){
+  const result = [];
+  const player = players[currentPlayer];
+  for(let i=0; i<4; i++){
+    if(canMove(player, i, dice)){
+      result.push(i);
+    }
+  }
+  return result;
+}
+
+function rollDice(){
+  if(gameOver || hasRolled || moving) return;
+  if(mode === "bot" && currentPlayer !== 0) return;
+
+  dice = Math.floor(Math.random()*6) + 1;
+  hasRolled = true;
+  updateUI();
+
+  const legal = getLegalTokens();
+
+  if(legal.length === 0){
+    setMessage(players[currentPlayer].name + " rolled " + dice + " — No legal moves.");
+    setTimeout(()=>{
+      if(dice === 6){
+        hasRolled = false;
+        setMessage(players[currentPlayer].name + " rolled 6 — Roll again.");
+        updateUI();
+        if(mode === "bot" && currentPlayer !== 0) setTimeout(rollDice, 600);
+      } else {
+        nextPlayer();
+      }
+    }, 800);
+    return;
+  }
+
+  if(legal.length === 1 && (mode !== "bot" || currentPlayer === 0)){
+    setTimeout(() => { moveToken(legal[0]); }, 300);
+  } else {
+    setMessage(players[currentPlayer].name + " rolled " + dice + " — Select a token.");
+    draw();
+  }
+
+  if(mode === "bot" && currentPlayer !== 0){
+    setTimeout(botMove, 600);
+  }
+}
+
+function moveToken(tokenIndex){
+  if(!hasRolled || moving || gameOver) return;
+  const player = players[currentPlayer];
+  if(!canMove(player, tokenIndex, dice)) return;
+
+  moving = true;
+  const roll = dice;
+  let startValue = player.tokens[tokenIndex];
+  let targetValue = (startValue === -1) ? 0 : startValue + roll;
+
+  animateToken(currentPlayer, tokenIndex, startValue, targetValue, ()=>{
+    player.tokens[tokenIndex] = targetValue;
+    const captured = captureEnemies(currentPlayer, tokenIndex);
+    moving = false;
+
+    draw();
+
+    if(player.tokens.every(v => v === 57)){
+      winGame(player.name);
+      return;
+    }
+
+    if(roll === 6 || captured){
+      dice = 0;
+      hasRolled = false;
+      setMessage(player.name + (captured ? " captured a token!" : " rolled 6!") + " Roll again.");
+      updateUI();
+      if(mode === "bot" && currentPlayer !== 0){
+        setTimeout(rollDice, 650);
+      }
+      return;
+    }
+
+    nextPlayer();
+  });
+}
+
+function animateToken(pi, ti, from, to, done){
+  let values = [];
+  if(from === -1){
+    values = [0];
+  } else {
+    for(let v = from + 1; v <= to; v++) values.push(v);
+  }
+
+  let index = 0;
+  function step(){
+    if(index >= values.length){
+      done();
+      return;
+    }
+    players[pi].tokens[ti] = values[index];
+    draw();
+    index++;
+    setTimeout(step, 90);
+  }
+  step();
+}
+
+function captureEnemies(playerIndex, tokenIndex){
+  const player = players[playerIndex];
+  const value = player.tokens[tokenIndex];
+  if(value < 0 || value > 50) return false;
+
+  const absolute = (START[playerIndex] + value) % 52;
+  if(SAFE.has(absolute)) return false;
+
+  let captured = false;
+  for(let p = 0; p < players.length; p++){
+    if(p === playerIndex) continue;
+    for(let t = 0; t < 4; t++){
+      const enemy = players[p].tokens[t];
+      if(enemy < 0 || enemy > 50) continue;
+      const enemyAbsolute = (START[p] + enemy) % 52;
+      if(enemyAbsolute === absolute){
+        players[p].tokens[t] = -1;
+        captured = true;
+      }
+    }
+  }
+  return captured;
+}
+
+function nextPlayer(){
+  currentPlayer = (currentPlayer + 1) % playerCount;
+  dice = 0;
+  hasRolled = false;
+  moving = false;
+
+  setMessage(players[currentPlayer].name + "'s turn — Roll the dice.");
+  updateUI();
+
+  if(mode === "bot" && currentPlayer !== 0){
+    setTimeout(rollDice, 700);
+  }
+}
+
+function botMove(){
+  if(gameOver || moving || !hasRolled || currentPlayer === 0) return;
+  const legal = getLegalTokens();
+  if(!legal.length) return;
+
+  const player = players[currentPlayer];
+  let best = legal[0];
+  let bestScore = -9999;
+
+  for(const token of legal){
+    const value = player.tokens[token];
+    let score = 0;
+
+    if(value >= 0 && value + dice === 57) score += 10000;
+    if(value === -1 && dice === 6) score += 500;
+    score += value < 0 ? 0 : value + dice;
+
+    if(value >= 0 && value <= 50){
+      const absolute = (START[currentPlayer] + value + dice) % 52;
+      if(!SAFE.has(absolute)){
+        for(let p = 0; p < players.length; p++){
+          if(p === currentPlayer) continue;
+          for(const enemy of players[p].tokens){
+            if(enemy >= 0 && enemy <= 50 && (START[p] + enemy) % 52 === absolute){
+              score += 2500;
+            }
+          }
+        }
+      }
+    }
+
+    if(score > bestScore){
+      bestScore = score;
+      best = token;
+    }
+  }
+
+  setTimeout(() => { moveToken(best); }, 300);
+}
+
+function winGame(name){
+  gameOver = true;
+  document.getElementById("winnerText").textContent = name + " WINS!";
+  document.getElementById("overlay").classList.add("show");
+  coins += 25;
+  localStorage.setItem("gzd_coins", coins);
+  document.getElementById("coins").textContent = coins;
+  updateUI();
+}
+
+function tokenPosition(playerIndex, tokenIndex){
+  const value = players[playerIndex].tokens[tokenIndex];
+
+  if(value === -1){
+    return {
+      x: YARDS[playerIndex][tokenIndex][0] * CELL,
+      y: YARDS[playerIndex][tokenIndex][1] * CELL
+    };
+  }
+
+  if(value === 57){
+    const finish = [
+      {x: 6.5 * CELL, y: 7.5 * CELL},
+      {x: 7.5 * CELL, y: 6.5 * CELL},
+      {x: 8.5 * CELL, y: 7.5 * CELL},
+      {x: 7.5 * CELL, y: 8.5 * CELL}
+    ];
+    return finish[playerIndex];
+  }
+
+  if(value >= 52){
+    const cell = LANES[playerIndex][value - 52];
+    return {
+      x: cell[0] * CELL + CELL/2,
+      y: cell[1] * CELL + CELL/2
+    };
+  }
+
+  const cell = PATH[(START[playerIndex] + value) % 52];
+  return {
+    x: cell[0] * CELL + CELL/2,
+    y: cell[1] * CELL + CELL/2
+  };
+}
+
+function draw(){
+  ctx.clearRect(0, 0, 750, 750);
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, 750, 750);
+
+  // Yard Bases
+  drawYard(0, 0, COLORS[0]);
+  drawYard(9 * CELL, 0, COLORS[1]);
+  drawYard(9 * CELL, 9 * CELL, COLORS[2]);
+  drawYard(0, 9 * CELL, COLORS[3]);
+
+  // Track rendering
+  for(let i = 0; i < PATH.length; i++){
+    const q = PATH[i];
+    const X = q[0] * CELL;
+    const Y = q[1] * CELL;
+
+    ctx.fillStyle = SAFE.has(i) ? "#fff1ad" : "#ffffff";
+    ctx.fillRect(X + 1, Y + 1, CELL - 2, CELL - 2);
+    ctx.strokeStyle = "#ccc";
+    ctx.strokeRect(X + 1, Y + 1, CELL - 2, CELL - 2);
+
+    if(SAFE.has(i)){
+      ctx.fillStyle = "#dba000";
+      ctx.font = "20px Arial";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("★", X + CELL/2, Y + CELL/2);
+    }
+  }
+
+  // Home Lanes
+  for(let p = 0; p < 4; p++){
+    LANES[p].forEach(cell => {
+      ctx.fillStyle = COLORS[p];
+      ctx.fillRect(cell[0] * CELL + 1, cell[1] * CELL + 1, CELL - 2, CELL - 2);
+    });
+  }
+
+  // Center Triangle
+  ctx.fillStyle = "#eee";
+  ctx.fillRect(6 * CELL, 6 * CELL, 3 * CELL, 3 * CELL);
+
+  const tris = [
+    [COLORS[0], [[6*CELL, 6*CELL], [7.5*CELL, 7.5*CELL], [6*CELL, 9*CELL]]],
+    [COLORS[1], [[6*CELL, 6*CELL], [7.5*CELL, 7.5*CELL], [9*CELL, 6*CELL]]],
+    [COLORS[2], [[9*CELL, 6*CELL], [7.5*CELL, 7.5*CELL], [9*CELL, 9*CELL]]],
+    [COLORS[3], [[6*CELL, 9*CELL], [7.5*CELL, 7.5*CELL], [9*CELL, 9*CELL]]]
+  ];
+
+  tris.forEach(tri => {
+    ctx.fillStyle = tri[0];
+    ctx.beginPath();
+    ctx.moveTo(tri[1][0][0], tri[1][0][1]);
+    ctx.lineTo(tri[1][1][0], tri[1][1][1]);
+    ctx.lineTo(tri[1][2][0], tri[1][2][1]);
+    ctx.closePath();
+    ctx.fill();
+  });
+
+  // Render tokens
+  for(let p = 0; p < players.length; p++){
+    for(let t = 0; t < 4; t++){
+      drawToken(p, t);
+    }
+  }
+}
+
+function drawYard(x, y, color){
+  ctx.fillStyle = color;
+  ctx.fillRect(x, y, 6 * CELL, 6 * CELL);
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(x + CELL, y + CELL, 4 * CELL, 4 * CELL);
+}
+
+function drawToken(playerIndex, tokenIndex){
+  const pos = tokenPosition(playerIndex, tokenIndex);
+  const player = players[playerIndex];
+
+  // Offset tokens sharing the same spot
+  let overlapOffset = 0;
+  for(let p = 0; p < players.length; p++){
+    for(let t = 0; t < 4; t++){
+      if(p === playerIndex && t === tokenIndex) break;
+      const otherPos = tokenPosition(p, t);
+      if(Math.abs(otherPos.x - pos.x) < 2 && Math.abs(otherPos.y - pos.y) < 2){
+        overlapOffset += 4;
+      }
+    }
+  }
+
+  const renderX = pos.x + overlapOffset;
+  const renderY = pos.y + overlapOffset;
+
+  ctx.fillStyle = "#0004";
+  ctx.beginPath();
+  ctx.arc(renderX + 2, renderY + 3, 18, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = player.color;
+  ctx.beginPath();
+  ctx.arc(renderX, renderY, 17, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.strokeStyle = "#fff";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.fillStyle = "#fff";
+  ctx.font = "bold 12px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(tokenIndex + 1, renderX, renderY);
+
+  if(hasRolled && currentPlayer === playerIndex && canMove(player, tokenIndex, dice)){
+    ctx.strokeStyle = "#ffd21c";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.arc(renderX, renderY, 23, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+}
+
+canvas.addEventListener("pointerdown", function(e){
+  if(!hasRolled || moving || gameOver) return;
+  if(mode === "bot" && currentPlayer !== 0) return;
+
+  const rect = canvas.getBoundingClientRect();
+  const mx = ((e.clientX - rect.left) / rect.width) * 750;
+  const my = ((e.clientY - rect.top) / rect.height) * 750;
+
+  const player = players[currentPlayer];
+
+  for(let i = 0; i < 4; i++){
+    const pos = tokenPosition(currentPlayer, i);
+    if(Math.hypot(mx - pos.x, my - pos.y) < 30){
+      moveToken(i);
+      return;
+    }
+  }
+});
+
+newGame();
+</script>
+</body>
+</html>
